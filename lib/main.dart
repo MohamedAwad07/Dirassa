@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      initialRoute: '/splash',
+      initialRoute: '/home',
       onGenerateRoute: AppRouter.generateRoute,
       builder: (context, child) {
         return Directionality(textDirection: TextDirection.rtl, child: child!);

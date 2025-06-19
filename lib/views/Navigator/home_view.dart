@@ -20,6 +20,18 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ProfileView(fromSettings: true),
+              ),
+            ),
+            icon: Image.asset(Assets.assetsIconsAvatar, height: 40, width: 40),
+          ),
+          const SizedBox(width: 10),
+        ],
         title: const Text(
           AppStrings.appName,
           style: TextStyle(color: AppColors.secondary),
@@ -112,6 +124,11 @@ class _HomeViewState extends State<HomeView> {
               leading: const Icon(Icons.privacy_tip, color: AppColors.primary),
               title: const Text(AppStrings.privacyPolicy),
               onTap: () => Navigator.pushNamed(context, '/privacy-policy'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.red),
+              title: const Text(AppStrings.logout),
+              onTap: () => Navigator.pushReplacementNamed(context, '/login'),
             ),
           ],
         ),
