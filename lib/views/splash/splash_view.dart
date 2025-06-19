@@ -1,5 +1,5 @@
+import 'package:dirassa/core/utils/app_assets.dart';
 import 'package:flutter/material.dart';
-import '../../core/utils/app_strings.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -9,11 +9,32 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  double _opacity = 0.0;
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/login');
+    // Fade in
+    Future.delayed(const Duration(milliseconds: 200), () {
+      setState(() {
+        _opacity = 1.0;
+      });
+      // Fade out after visible for a while
+      Future.delayed(const Duration(seconds: 3), () {
+        setState(() {
+          _opacity = 0.0;
+        });
+        // Navigate after fade out
+        Future.delayed(
+          const Duration(milliseconds: 800),
+          () {
+            Navigator.pushReplacementNamed(
+              context,
+              '/login',
+            );
+          },
+        );
+      });
     });
   }
 
@@ -22,23 +43,13 @@ class _SplashViewState extends State<SplashView> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // TODO: Replace with your logo asset
-            Image.asset('assets/icons/logo.png', height: 120),
-            const SizedBox(height: 32),
-            const Text(
-              AppStrings.splashTitle,
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-              ),
-            ),
-            const SizedBox(height: 16),
-            const CircularProgressIndicator(),
-          ],
+        child: AnimatedOpacity(
+          opacity: _opacity,
+          duration: const Duration(milliseconds: 800),
+          child: Image.asset(
+            Assets.assetsImagesLogo,
+            height: 120,
+          ),
         ),
       ),
     );

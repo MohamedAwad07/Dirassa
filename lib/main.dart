@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/utils/app_router.dart';
-import 'cubits/auth_cubit.dart';
+import 'viewmodels/cubits/auth_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/utils/app_strings.dart';
 
 void main() {
-  runApp(BlocProvider(create: (_) => AuthCubit(), child: const MyApp()));
+  runApp(
+    BlocProvider(
+      create: (_) => AuthCubit(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +21,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: AppStrings.appName,
-      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Cairo'),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: 'Cairo',
+      ),
       locale: const Locale('ar'),
       supportedLocales: [const Locale('ar')],
       localizationsDelegates: [
@@ -27,7 +35,10 @@ class MyApp extends StatelessWidget {
       initialRoute: '/splash',
       onGenerateRoute: AppRouter.generateRoute,
       builder: (context, child) {
-        return Directionality(textDirection: TextDirection.rtl, child: child!);
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: child!,
+        );
       },
     );
   }
