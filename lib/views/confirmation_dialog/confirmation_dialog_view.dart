@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/app_strings.dart';
+import '../../core/utils/app_strings.dart';
 
 class ConfirmationDialogView extends StatelessWidget {
   final int dialogType; // 1 or 2, to select which dialog to show

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'app_router.dart';
+import 'core/utils/app_router.dart';
 import 'cubits/auth_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'core/app_strings.dart';
+import 'core/utils/app_strings.dart';
 
 void main() {
   runApp(BlocProvider(create: (_) => AuthCubit(), child: const MyApp()));

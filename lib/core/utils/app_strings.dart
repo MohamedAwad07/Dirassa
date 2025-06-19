@@ -1,7 +1,7 @@
 class AppStrings {
   // General
   static const String appName = 'دراسة';
-  static const String pageNotFound = 'Page not found';
+  static const String pageNotFound = 'الصفحة غير موجودة';
 
   // Splash
   static const String splashTitle = 'دراسة';
@@ -53,9 +53,8 @@ class AppStrings {
   static const String connectionErrorRetry = 'إعادة المحاولة';
 
   // Confirmation Dialog
-  static const String confirmationTitle = 'Are you sure?';
-  static const String confirmationBody =
-      'Do you want to proceed with this action?';
-  static const String confirmationCancel = 'Cancel';
-  static const String confirmationConfirm = 'Confirm';
+  static const String confirmationTitle = 'هل أنت متأكد؟';
+  static const String confirmationBody = 'هل تريد المتابعة بهذا الإجراء؟';
+  static const String confirmationCancel = 'إلغاء';
+  static const String confirmationConfirm = 'تأكيد';
 }

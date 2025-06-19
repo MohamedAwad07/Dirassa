@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/app_strings.dart';
+import '../../core/utils/app_strings.dart';
 
 class ConnectionErrorView extends StatelessWidget {
   const ConnectionErrorView({super.key});

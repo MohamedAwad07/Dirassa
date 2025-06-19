@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../profile/profile_view.dart';
-import '../settings/settings_view.dart';
-import '../../core/app_strings.dart';
+import 'profile/profile_view.dart';
+import 'settings/settings_view.dart';
+import '../../core/utils/app_strings.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
