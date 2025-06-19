@@ -47,7 +47,7 @@ class AppStrings {
 
   // Settings
   static const String settingsAccount = 'الحساب';
-  static const String settingsNotifications = 'الإشعارات';
+  static const String appMode = 'الوضع الليلي';
   static const String settingsPrivacy = 'الخصوصية';
   static const String settingsHelp = 'المساعدة والدعم';
 

@@ -19,44 +19,80 @@ class WebViewScreen extends StatefulWidget {
 
 class _WebViewScreenState extends State<WebViewScreen> {
   late final WebViewController _controller;
+  String? _errorMessage;
 
   @override
   void initState() {
     super.initState();
-    _controller = WebViewController()..loadRequest(Uri.parse(widget.url));
+    _controller = WebViewController()
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onWebResourceError: (error) {
+            setState(() {
+              _errorMessage = error.description;
+            });
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse(widget.url));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        spacing: 16,
-        children: [
-          if (widget.showBackButton) const SizedBox(height: 36),
-          Row(
-            children: [
-              if (widget.showBackButton)
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.arrow_back),
-                ),
-              const Spacer(),
-              Center(
-                child: Text(
-                  widget.title ?? 'WebView',
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+      body: _errorMessage != null
+          ? Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.refresh, color: Colors.red, size: 48),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Failed to load page',
+                    style: TextStyle(color: Colors.red, fontSize: 16),
                   ),
-                ),
+                  const SizedBox(height: 8),
+                  ElevatedButton.icon(
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('Reload'),
+                    onPressed: () {
+                      setState(() {
+                        _errorMessage = null;
+                      });
+                      _controller.loadRequest(Uri.parse(widget.url));
+                    },
+                  ),
+                ],
               ),
-              const SizedBox(width: 36),
-              const Spacer(),
-            ],
-          ),
-          Expanded(child: WebViewWidget(controller: _controller)),
-        ],
-      ),
+            )
+          : Column(
+              spacing: 16,
+              children: [
+                if (widget.showBackButton) const SizedBox(height: 36),
+                Row(
+                  children: [
+                    if (widget.showBackButton)
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back),
+                      ),
+                    const Spacer(),
+                    Center(
+                      child: Text(
+                        widget.title ?? 'WebView',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 36),
+                    const Spacer(),
+                  ],
+                ),
+                Expanded(child: WebViewWidget(controller: _controller)),
+              ],
+            ),
     );
   }
 }

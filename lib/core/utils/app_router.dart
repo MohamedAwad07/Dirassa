@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import '../../views/splash/splash_view.dart';
 import '../../auth/login/login_view.dart';
 import '../../auth/register/register_view.dart';
-import '../../views/home/home_view.dart';
-import '../../views/home/profile/profile_view.dart';
-import '../../views/home/settings/settings_view.dart';
-import '../../views/about/about_view.dart';
-import '../../views/home/privacy_policy/privacy_policy_view.dart';
+import '../../views/Navigator/home_view.dart';
+import '../../views/Navigator/profile/profile_view.dart';
+import '../../views/Navigator/settings/settings_view.dart';
+import '../../views/Navigator/about/about_view.dart';
+import '../../views/Navigator/privacy_policy/privacy_policy_view.dart';
 import '../../views/connection_error/connection_error_view.dart';
 
 class AppRouter {
@@ -22,7 +22,11 @@ class AppRouter {
       case '/home':
         return MaterialPageRoute(builder: (_) => const HomeView());
       case '/profile':
-        return MaterialPageRoute(builder: (_) => const ProfileView());
+        final args = settings.arguments as Map<String, dynamic>?;
+        return MaterialPageRoute(
+          builder: (_) =>
+              ProfileView(fromSettings: args?['fromSettings'] ?? false),
+        );
       case '/settings':
         return MaterialPageRoute(builder: (_) => const SettingsView());
       case '/about':

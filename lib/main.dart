@@ -17,7 +17,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: AppStrings.appName,
-      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Cairo'),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: 'Cairo',
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(backgroundColor: Colors.white),
+      ),
       locale: const Locale('ar'),
       supportedLocales: [const Locale('ar')],
       localizationsDelegates: [
