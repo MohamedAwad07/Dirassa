@@ -1,4 +1,5 @@
 import 'package:dirassa/core/utils/app_assets.dart';
+import 'package:dirassa/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 
 class SplashView extends StatefulWidget {
@@ -16,24 +17,21 @@ class _SplashViewState extends State<SplashView> {
     super.initState();
     // Fade in
     Future.delayed(const Duration(milliseconds: 200), () {
+      if (!mounted) return;
       setState(() {
         _opacity = 1.0;
       });
       // Fade out after visible for a while
       Future.delayed(const Duration(seconds: 3), () {
+        if (!mounted) return;
         setState(() {
           _opacity = 0.0;
         });
         // Navigate after fade out
-        Future.delayed(
-          const Duration(milliseconds: 800),
-          () {
-            Navigator.pushReplacementNamed(
-              context,
-              '/login',
-            );
-          },
-        );
+        Future.delayed(const Duration(milliseconds: 800), () {
+          if (!mounted) return;
+          Navigator.pushReplacementNamed(context, '/login');
+        });
       });
     });
   }
@@ -42,15 +40,24 @@ class _SplashViewState extends State<SplashView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: AnimatedOpacity(
-          opacity: _opacity,
-          duration: const Duration(milliseconds: 800),
-          child: Image.asset(
-            Assets.assetsImagesLogo,
-            height: 120,
+      body: Column(
+        children: [
+          const Spacer(),
+          Center(
+            child: AnimatedOpacity(
+              opacity: _opacity,
+              duration: const Duration(milliseconds: 800),
+              child: Image.asset(Assets.assetsImagesLogo, height: 120),
+            ),
           ),
-        ),
+          const Spacer(),
+          AnimatedOpacity(
+            opacity: _opacity,
+            duration: const Duration(milliseconds: 800),
+            child: const Text(AppStrings.copyright),
+          ),
+          const SizedBox(height: 16),
+        ],
       ),
     );
   }

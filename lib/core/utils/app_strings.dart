@@ -8,15 +8,22 @@ class AppStrings {
 
   // Login
   static const String loginTitle = 'تسجيل الدخول';
+  static const String loginDescription =
+      'بمجرد الدخول , انت توافق علي الشروط والأحكام';
   static const String loginButton = 'تسجيل الدخول';
-  static const String loginNoAccount = 'ليس لديك حساب؟ سجل الآن';
+  static const String loginError =
+      'يجب أن يكون لديك كل البيانات المطلوبة';
+  static const String loginNoAccount =
+      'ليس لديك حساب؟ سجل الآن';
   static const String loginEmail = 'البريد الإلكتروني';
+  static const String loginPhone = 'رقم الهاتف';
   static const String loginPassword = 'كلمة المرور';
 
   // Register
   static const String registerTitle = 'إنشاء حساب جديد';
   static const String registerButton = 'إنشاء حساب';
-  static const String registerHasAccount = 'لديك حساب بالفعل؟ سجل الدخول';
+  static const String registerHasAccount =
+      'لديك حساب بالفعل؟ سجل الدخول';
 
   // Home/Drawer
   static const String home = 'الرئيسية';
@@ -36,8 +43,10 @@ class AppStrings {
   // Profile
   static const String profileUsername = 'اسم المستخدم';
   static const String profileEmail = 'user@email.com';
-  static const String profileAccountSettings = 'إعدادات الحساب';
-  static const String profilePrivacyPolicy = 'سياسة الخصوصية';
+  static const String profileAccountSettings =
+      'إعدادات الحساب';
+  static const String profilePrivacyPolicy =
+      'سياسة الخصوصية';
   static const String profileLogout = 'تسجيل الخروج';
 
   // Settings
@@ -47,14 +56,21 @@ class AppStrings {
   static const String settingsHelp = 'المساعدة والدعم';
 
   // Connection Error
-  static const String connectionErrorTitle = 'خطأ في الاتصال';
+  static const String connectionErrorTitle =
+      'خطأ في الاتصال';
   static const String connectionErrorBody =
       'تعذر الاتصال بالإنترنت. يرجى التحقق من الاتصال وحاول مرة أخرى.';
-  static const String connectionErrorRetry = 'إعادة المحاولة';
+  static const String connectionErrorRetry =
+      'إعادة المحاولة';
 
   // Confirmation Dialog
   static const String confirmationTitle = 'هل أنت متأكد؟';
-  static const String confirmationBody = 'هل تريد المتابعة بهذا الإجراء؟';
+  static const String confirmationBody =
+      'هل تريد المتابعة بهذا الإجراء؟';
   static const String confirmationCancel = 'إلغاء';
   static const String confirmationConfirm = 'تأكيد';
+
+  // Copyright
+  static const String copyright =
+      'حقوق الطبع والنشر © 2025';
 }
