@@ -1,4 +1,6 @@
+import 'package:dirassa/core/utils/app_assets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import '../../../core/utils/app_strings.dart';
 
 class SettingsView extends StatelessWidget {
@@ -11,32 +13,32 @@ class SettingsView extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
-            leading: Image.asset(
-              'assets/icons/Settings icons/png/Depth 4, Frame 0.png',
+            leading: SvgPicture.asset(
+              Assets.assetsIconsSettingsLanguage,
               height: 28,
             ),
             title: const Text(AppStrings.settingsAccount),
             onTap: () {},
           ),
           ListTile(
-            leading: Image.asset(
-              'assets/icons/Settings icons/png/Depth 4, Frame 0-1.png',
+            leading: SvgPicture.asset(
+              Assets.assetsIconsSettingsLanguage,
               height: 28,
             ),
             title: const Text(AppStrings.settingsNotifications),
             onTap: () {},
           ),
           ListTile(
-            leading: Image.asset(
-              'assets/icons/Settings icons/png/Depth 4, Frame 0-2.png',
+            leading: SvgPicture.asset(
+              Assets.assetsIconsSettingsLanguage,
               height: 28,
             ),
             title: const Text(AppStrings.settingsPrivacy),
             onTap: () {},
           ),
           ListTile(
-            leading: Image.asset(
-              'assets/icons/Settings icons/png/Depth 4, Frame 0-3.png',
+            leading: SvgPicture.asset(
+              Assets.assetsIconsSettingsLanguage,
               height: 28,
             ),
             title: const Text(AppStrings.settingsHelp),

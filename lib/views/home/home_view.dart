@@ -1,3 +1,5 @@
+import 'package:dirassa/core/components/webview_screen.dart';
+import 'package:dirassa/core/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'profile/profile_view.dart';
 import 'settings/settings_view.dart';
@@ -16,13 +18,10 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text(AppStrings.appName)),
       body: IndexedStack(
         index: _currentIndex,
-        children: const [
-          Center(child: Text(AppStrings.home, style: TextStyle(fontSize: 24))),
-          ProfileView(),
-          SettingsView(),
-        ],
+        children: const [HomeScreen(), ProfileView(), SettingsView()],
       ),
       drawer: Drawer(
         child: ListView(
@@ -31,7 +30,7 @@ class _HomeViewState extends State<HomeView> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset('assets/icons/logo.png', height: 60),
+                  Image.asset(Assets.assetsImagesLogo, height: 60),
                   const SizedBox(height: 8),
                   const Text(
                     AppStrings.appName,
@@ -86,6 +85,21 @@ class _HomeViewState extends State<HomeView> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: WebViewScreen(
+        url: 'https://www.google.com',
+        showBackButton: false,
+        title: 'الجلسات المباشرة',
       ),
     );
   }

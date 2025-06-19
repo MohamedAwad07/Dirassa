@@ -4,8 +4,14 @@ import 'package:webview_flutter/webview_flutter.dart';
 class WebViewScreen extends StatefulWidget {
   final String url;
   final String? title;
+  final bool showBackButton;
 
-  const WebViewScreen({super.key, required this.url, this.title});
+  const WebViewScreen({
+    super.key,
+    required this.url,
+    this.title,
+    this.showBackButton = true,
+  });
 
   @override
   State<WebViewScreen> createState() => _WebViewScreenState();
@@ -26,13 +32,14 @@ class _WebViewScreenState extends State<WebViewScreen> {
       body: Column(
         spacing: 16,
         children: [
-          const SizedBox(height: 36),
+          if (widget.showBackButton) const SizedBox(height: 36),
           Row(
             children: [
-              IconButton(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.arrow_back),
-              ),
+              if (widget.showBackButton)
+                IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.arrow_back),
+                ),
               const Spacer(),
               Center(
                 child: Text(
