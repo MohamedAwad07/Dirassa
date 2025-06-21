@@ -17,7 +17,6 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
   flutter_localizations:
     sdk: flutter
-  flutter_native_splash: ^2.4.6
   flutter_svg: ^2.2.0
   shared_preferences: ^2.2.2
   webview_flutter: ^4.13.0
@@ -32,18 +31,6 @@ flutter_icons:
   ios: true
   image_path: "assets/icons/appIcon.png"
   adaptive_icon_foreground: "assets/icons/appIcon.png"
-
-flutter_native_splash:
-  android: true
-  ios: true
-  web: false
-  color: "#ffffff"         # Light mode background
-  color_dark: "#001D35"   # Dark mode background (example: dark blue)
-  android_12:
-    color: "#ffffff"
-    color_dark: "#001D35"
-    icon_background_color: "#ffffff"
-    icon_background_color_dark: "#001D35"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
