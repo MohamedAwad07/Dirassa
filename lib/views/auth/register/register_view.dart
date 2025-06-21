@@ -58,39 +58,27 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
                 CustomButton(
                   text: AppStrings.registerButton,
-                  // onPressed: urlState.registerUrl != null
-                  //     ? () {
-                  //         Navigator.push(
-                  //           context,
-                  //           MaterialPageRoute(
-                  //             builder: (_) => const WebViewScreen(
-                  //               // url: urlState.registerUrl!,
-                  //               url: "https://www.google.com",
-                  //               title: 'Register',
-                  //             ),
-                  //           ),
-                  //         );
-                  //       }
-                  //     : () {
-                  //         ScaffoldMessenger.of(context).showSnackBar(
-                  //           const SnackBar(
-                  //             content: Center(
-                  //               child: Text(AppStrings.urlNotAvailable),
-                  //             ),
-                  //           ),
-                  //         );
-                  //       }, // Empty function if URL is not available
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const WebViewScreen(
-                          url: "https://www.google.com",
-                          title: AppStrings.registerTitle,
-                        ),
-                      ),
-                    );
-                  },
+                  onPressed: urlState.registerUrl != null
+                      ? () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => WebViewScreen(
+                                url: urlState.registerUrl!,
+                                title: AppStrings.registerTitle,
+                              ),
+                            ),
+                          );
+                        }
+                      : () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Center(
+                                child: Text(AppStrings.urlNotAvailable),
+                              ),
+                            ),
+                          );
+                        }, // Empty function if URL is not available
                 ),
                 CustomTextButton(
                   text: AppStrings.registerHasAccount,

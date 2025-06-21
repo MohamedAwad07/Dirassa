@@ -8,7 +8,8 @@ class DioHandler {
   DioHandler._internal();
 
   late Dio _dio;
-  static const String configUrl = 'https://json.dirassa.com/config.json';
+  static const String configUrl =
+      'https://dirassa.online/api/config/app_links.php';
   Dio get dio => _dio;
 
   void init() {

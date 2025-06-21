@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dirassa/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -43,6 +45,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    log(widget.url);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: _errorMessage != null
