@@ -1,3 +1,6 @@
+import 'package:dirassa/core/functions/api_handler.dart';
+import 'package:dirassa/models/Login/login_request.dart';
+import 'package:dirassa/models/Login/login_response.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -6,22 +9,15 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
 
-  void login(String email, String password) async {
+  void login(LoginRequest loginRequest) async {
     emit(AuthLoading());
-    // Simulate login logic
-    await Future.delayed(const Duration(seconds: 1));
-    if (email == 'user@email.com' && password == 'password') {
-      emit(AuthAuthenticated(email: email));
-    } else {
-      emit(AuthError('Invalid credentials'));
-    }
-  }
+    final LoginResponse loginResponse = await loginUser(loginRequest);
 
-  void register(String email, String password) async {
-    emit(AuthLoading());
-    // Simulate registration logic
-    await Future.delayed(const Duration(seconds: 1));
-    emit(AuthAuthenticated(email: email));
+    if (loginResponse.success == true) {
+      emit(AuthAuthenticated(token: loginResponse.token ?? ''));
+    } else {
+      emit(AuthError(loginResponse.message ?? ''));
+    }
   }
 
   void logout() {

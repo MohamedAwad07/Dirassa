@@ -17,10 +17,10 @@ class AuthLoginUrl extends AuthState {
 }
 
 class AuthAuthenticated extends AuthState {
-  final String email;
-  AuthAuthenticated({required this.email});
+  final String token;
+  AuthAuthenticated({required this.token});
   @override
-  List<Object?> get props => [email];
+  List<Object?> get props => [token];
 }
 
 class AuthError extends AuthState {

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:dirassa/core/functions/get_urls.dart';
+import 'package:dirassa/core/functions/api_handler.dart';
 
 part 'url_state.dart';
 

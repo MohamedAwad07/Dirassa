@@ -15,7 +15,6 @@ import 'core/utils/app_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = Observe();
-
   await ScreenshotPrevention.initialize();
 
   runApp(
