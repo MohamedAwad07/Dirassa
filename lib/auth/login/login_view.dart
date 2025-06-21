@@ -10,7 +10,6 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.white,
         body: Column(
           children: [
             const Expanded(child: SingleChildScrollView(child: LoginForm())),

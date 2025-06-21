@@ -1,0 +1,63 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../utils/app_colors.dart';
+import '../../viewmodels/cubits/theme_cubit/theme_cubit.dart';
+
+class ThemeToggle extends StatelessWidget {
+  final double? iconSize;
+  final bool showLabel;
+
+  const ThemeToggle({super.key, this.iconSize = 28, this.showLabel = true});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ThemeCubit, ThemeState>(
+      builder: (context, state) {
+        final isDarkMode = state.themeMode == ThemeMode.dark;
+
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (showLabel) ...[
+              Text(
+                isDarkMode ? 'الوضع الليلي' : 'الوضع النهاري',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(width: 8),
+            ],
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (child, animation) => RotationTransition(
+                turns: child.key == const ValueKey('dark')
+                    ? Tween<double>(begin: 1, end: 0.75).animate(animation)
+                    : Tween<double>(begin: 0.75, end: 1).animate(animation),
+                child: child,
+              ),
+              child: isDarkMode
+                  ? Icon(
+                      Icons.dark_mode,
+                      key: const ValueKey('dark'),
+                      color: Colors.amber,
+                      size: iconSize,
+                    )
+                  : Icon(
+                      Icons.light_mode,
+                      key: const ValueKey('light'),
+                      color: Colors.blue,
+                      size: iconSize,
+                    ),
+            ),
+            const SizedBox(width: 8),
+            Switch(
+              activeColor: AppColors.secondary,
+              value: isDarkMode,
+              onChanged: (value) {
+                context.read<ThemeCubit>().toggleTheme();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}

@@ -1,18 +1,11 @@
 import 'package:dirassa/core/utils/app_assets.dart';
-import 'package:dirassa/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../core/utils/app_strings.dart';
+import '../../../core/components/theme_toggle.dart';
 
-class SettingsView extends StatefulWidget {
+class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
-
-  @override
-  State<SettingsView> createState() => _SettingsViewState();
-}
-
-class _SettingsViewState extends State<SettingsView> {
-  bool _isDarkMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,42 +32,11 @@ class _SettingsViewState extends State<SettingsView> {
             },
           ),
           ListTile(
-            leading: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 300),
-              transitionBuilder: (child, animation) => RotationTransition(
-                turns: child.key == const ValueKey('dark')
-                    ? Tween<double>(begin: 1, end: 0.75).animate(animation)
-                    : Tween<double>(begin: 0.75, end: 1).animate(animation),
-                child: child,
-              ),
-              child: _isDarkMode
-                  ? const Icon(
-                      Icons.dark_mode,
-                      key: ValueKey('dark'),
-                      color: Colors.amber,
-                      size: 28,
-                    )
-                  : const Icon(
-                      Icons.light_mode,
-                      key: ValueKey('light'),
-                      color: Colors.blue,
-                      size: 28,
-                    ),
-            ),
+            leading: const Icon(Icons.brightness_6),
             title: const Text(AppStrings.appMode),
-            trailing: Switch(
-              activeColor: AppColors.secondary,
-              value: _isDarkMode,
-              onChanged: (value) {
-                setState(() {
-                  _isDarkMode = value;
-                });
-              },
-            ),
+            trailing: const ThemeToggle(showLabel: false),
             onTap: () {
-              setState(() {
-                _isDarkMode = !_isDarkMode;
-              });
+              // Theme toggle is handled by the ThemeToggle widget
             },
           ),
           ListTile(

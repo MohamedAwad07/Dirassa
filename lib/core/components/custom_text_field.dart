@@ -25,6 +25,7 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscureText,
       textAlign: TextAlign.right,
       decoration: InputDecoration(
+        filled: false,
         labelText: label,
         prefixIcon: SizedBox(
           width: 24,

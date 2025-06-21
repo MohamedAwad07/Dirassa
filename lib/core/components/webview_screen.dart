@@ -40,6 +40,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: _errorMessage != null
           ? Center(
               child: Column(
@@ -69,26 +70,29 @@ class _WebViewScreenState extends State<WebViewScreen> {
               spacing: 16,
               children: [
                 if (widget.showBackButton) const SizedBox(height: 36),
-                Row(
-                  children: [
-                    if (widget.showBackButton)
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: const Icon(Icons.arrow_back),
-                      ),
-                    const Spacer(),
-                    Center(
-                      child: Text(
-                        widget.title ?? 'WebView',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(
+                    children: [
+                      if (widget.showBackButton)
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: const Icon(Icons.arrow_back),
+                        ),
+                      const Spacer(),
+                      Center(
+                        child: Text(
+                          widget.title ?? 'WebView',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 36),
-                    const Spacer(),
-                  ],
+                      const SizedBox(width: 36),
+                      const Spacer(),
+                    ],
+                  ),
                 ),
                 Expanded(child: WebViewWidget(controller: _controller)),
               ],

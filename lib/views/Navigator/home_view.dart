@@ -18,6 +18,8 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -36,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
           AppStrings.appName,
           style: TextStyle(color: AppColors.secondary),
         ),
-        backgroundColor: Colors.white,
+        centerTitle: false,
       ),
       body: IndexedStack(
         index: _currentIndex,
@@ -68,7 +70,9 @@ class _HomeViewState extends State<HomeView> {
               title: Text(
                 AppStrings.home,
                 style: TextStyle(
-                  color: _currentIndex == 0 ? AppColors.secondary : null,
+                  color: _currentIndex == 0
+                      ? AppColors.secondary
+                      : theme.textTheme.bodyLarge?.color,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -85,7 +89,9 @@ class _HomeViewState extends State<HomeView> {
               title: Text(
                 AppStrings.profile,
                 style: TextStyle(
-                  color: _currentIndex == 1 ? AppColors.secondary : null,
+                  color: _currentIndex == 1
+                      ? AppColors.secondary
+                      : theme.textTheme.bodyLarge?.color,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -102,7 +108,9 @@ class _HomeViewState extends State<HomeView> {
               title: Text(
                 AppStrings.settings,
                 style: TextStyle(
-                  color: _currentIndex == 2 ? AppColors.secondary : null,
+                  color: _currentIndex == 2
+                      ? AppColors.secondary
+                      : theme.textTheme.bodyLarge?.color,
                   fontWeight: FontWeight.bold,
                 ),
               ),
