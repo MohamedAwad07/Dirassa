@@ -3,6 +3,7 @@ import 'package:dirassa/core/components/custom_text_button.dart';
 import 'package:dirassa/core/components/webview_screen.dart';
 import 'package:dirassa/core/utils/app_assets.dart';
 import 'package:dirassa/core/utils/app_strings.dart';
+import 'package:dirassa/core/utils/screenshot_prevention.dart';
 import 'package:flutter/material.dart';
 
 class RegisterView extends StatefulWidget {
@@ -13,6 +14,20 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
+  @override
+  void initState() {
+    super.initState();
+    // Prevent screenshots on register screen
+    ScreenshotPrevention.preventScreenshots();
+  }
+
+  @override
+  void dispose() {
+    // Allow screenshots when leaving register screen
+    ScreenshotPrevention.allowScreenshots();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

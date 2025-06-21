@@ -15,7 +15,7 @@ class LoginView extends StatelessWidget {
           Image.asset(
             Assets.assetsImagesLoginLanding2,
             color: AppColors.primary,
-            height: 150,
+            height: 120,
             width: double.infinity,
             fit: BoxFit.fill,
           ),

@@ -2,6 +2,7 @@ import 'package:dirassa/core/utils/app_assets.dart';
 import 'package:dirassa/core/utils/app_colors.dart';
 import 'package:dirassa/core/widgets/connectivity_indicator.dart';
 import 'package:dirassa/core/widgets/connectivity_wrapper.dart';
+import 'package:dirassa/core/utils/screenshot_prevention.dart';
 import 'package:dirassa/views/Navigator/home_screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'profile/profile_view.dart';
@@ -17,6 +18,20 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Prevent screenshots on home screen
+    ScreenshotPrevention.preventScreenshots();
+  }
+
+  @override
+  void dispose() {
+    // Allow screenshots when leaving home screen
+    ScreenshotPrevention.allowScreenshots();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
