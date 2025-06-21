@@ -1,8 +1,8 @@
 import 'package:dirassa/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import '../../views/splash/splash_view.dart';
-import '../../auth/login/login_view.dart';
-import '../../auth/register/register_view.dart';
+import '../../views/auth/login/login_view.dart';
+import '../../views/auth/register/register_view.dart';
 import '../../views/Navigator/home_view.dart';
 import '../../views/Navigator/profile/profile_view.dart';
 import '../../views/Navigator/settings/settings_view.dart';

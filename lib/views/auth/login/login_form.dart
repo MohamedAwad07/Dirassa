@@ -6,7 +6,7 @@ import 'package:dirassa/core/utils/app_assets.dart';
 import 'package:dirassa/core/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../core/utils/app_strings.dart';
+import '../../../core/utils/app_strings.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -68,6 +68,7 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 24),
           const AppLogo(),
           CustomTextField(
+            keyboardType: TextInputType.emailAddress,
             controller: _emailController,
             label: AppStrings.loginEmail,
             prefixIcon: SvgPicture.asset(
@@ -80,12 +81,14 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 12),
           CustomTextField(
+            keyboardType: TextInputType.phone,
             controller: _phoneController,
             label: AppStrings.loginPhone,
             prefixIcon: const Icon(Icons.phone, color: AppColors.primary),
           ),
           const SizedBox(height: 12),
           CustomTextField(
+            keyboardType: TextInputType.visiblePassword,
             controller: _passwordController,
             label: AppStrings.loginPassword,
             prefixIcon: SvgPicture.asset(

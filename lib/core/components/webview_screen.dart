@@ -53,15 +53,18 @@ class _WebViewScreenState extends State<WebViewScreen> {
                     style: TextStyle(color: Colors.red, fontSize: 16),
                   ),
                   const SizedBox(height: 8),
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.refresh),
-                    label: const Text('Reload'),
-                    onPressed: () {
-                      setState(() {
-                        _errorMessage = null;
-                      });
-                      _controller.loadRequest(Uri.parse(widget.url));
-                    },
+                  SizedBox(
+                    width: 100,
+                    child: ElevatedButton.icon(
+                      icon: const Icon(Icons.refresh),
+                      label: const Text('Reload'),
+                      onPressed: () {
+                        setState(() {
+                          _errorMessage = null;
+                        });
+                        _controller.loadRequest(Uri.parse(widget.url));
+                      },
+                    ),
                   ),
                 ],
               ),

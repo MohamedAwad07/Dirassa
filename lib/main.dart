@@ -4,6 +4,7 @@ import 'core/utils/app_router.dart';
 import 'core/utils/status_bar_config.dart';
 import 'viewmodels/cubits/auth_cubit/auth_cubit.dart';
 import 'viewmodels/cubits/theme_cubit/theme_cubit.dart';
+import 'viewmodels/cubits/connectivity_cubit/connectivity_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/utils/app_strings.dart';
 import 'core/utils/app_theme.dart';
@@ -14,6 +15,7 @@ void main() {
       providers: [
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => ThemeCubit()),
+        BlocProvider(create: (_) => ConnectivityCubit()),
       ],
       child: const MyApp(),
     ),
@@ -27,7 +29,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, themeState) {
-        // Configure status bar based on theme
         StatusBarConfig.setStatusBarForTheme(themeState.themeMode);
 
         return MaterialApp(

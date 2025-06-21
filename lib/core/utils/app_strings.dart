@@ -65,10 +65,13 @@ class AppStrings {
   static const String settingsHelp = 'المساعدة والدعم';
 
   // Connection Error
-  static const String connectionErrorTitle = 'خطأ في الاتصال';
+  static const String connectionErrorTitle = 'لا يوجد اتصال بالإنترنت';
   static const String connectionErrorBody =
-      'تعذر الاتصال بالإنترنت. يرجى التحقق من الاتصال وحاول مرة أخرى.';
+      'يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى';
   static const String connectionErrorRetry = 'إعادة المحاولة';
+  static const String connectionErrorRetrying = 'جاري المحاولة...';
+  static const String connectionRestored = 'تم استعادة الاتصال بنجاح';
+  static const String connectionConnected = 'متصل بالإنترنت';
 
   // Confirmation Dialog
   static const String confirmationTitle = 'هل أنت متأكد؟';
