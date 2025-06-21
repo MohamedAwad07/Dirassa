@@ -24,8 +24,10 @@ class AppRouter {
       case '/profile':
         final args = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
-          builder: (_) =>
-              ProfileView(fromSettings: args?['fromSettings'] ?? false),
+          builder: (_) => ProfileView(
+            fromSettings: args?['fromSettings'] ?? false,
+            showAppBar: args?['showAppBar'] ?? false,
+          ),
         );
       case '/settings':
         return MaterialPageRoute(builder: (_) => const SettingsView());

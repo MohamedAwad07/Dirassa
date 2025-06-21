@@ -44,36 +44,20 @@ class _HomeViewState extends State<HomeView> {
             ),
             const SizedBox(width: 10),
           ],
-          title: const Text(
-            AppStrings.appName,
-            style: TextStyle(color: AppColors.secondary),
-          ),
-          centerTitle: false,
         ),
         body: IndexedStack(
           index: _currentIndex,
-          children: const [HomeScreen(), ProfileView(), SettingsView()],
+          children: const [
+            HomeScreen(),
+            ProfileView(fromSettings: false, showAppBar: true),
+            SettingsView(),
+          ],
         ),
         drawer: Drawer(
           child: ListView(
             children: [
               DrawerHeader(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(Assets.assetsImagesLogo, height: 60),
-                    const SizedBox(height: 8),
-                    const Text(
-                      AppStrings.appName,
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.secondary,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ],
-                ),
+                child: Image.asset(Assets.assetsImagesLogo, height: 60),
               ),
               ListTile(
                 leading: const Icon(Icons.home, color: AppColors.primary),

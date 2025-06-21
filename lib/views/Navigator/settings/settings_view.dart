@@ -1,5 +1,7 @@
 import 'package:dirassa/core/utils/app_assets.dart';
+import 'package:dirassa/viewmodels/cubits/theme_cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../core/utils/app_strings.dart';
 import '../../../core/components/theme_toggle.dart';
@@ -36,7 +38,7 @@ class SettingsView extends StatelessWidget {
             title: const Text(AppStrings.appMode),
             trailing: const ThemeToggle(showLabel: false),
             onTap: () {
-              // Theme toggle is handled by the ThemeToggle widget
+              context.read<ThemeCubit>().toggleTheme();
             },
           ),
           ListTile(

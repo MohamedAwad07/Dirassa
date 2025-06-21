@@ -1,3 +1,4 @@
+import 'package:dirassa/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -5,12 +6,14 @@ class WebViewScreen extends StatefulWidget {
   final String url;
   final String? title;
   final bool showBackButton;
+  final bool fromHome;
 
   const WebViewScreen({
     super.key,
     required this.url,
     this.title,
     this.showBackButton = true,
+    this.fromHome = false,
   });
 
   @override
@@ -25,6 +28,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   void initState() {
     super.initState();
     _controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
           onWebResourceError: (error) {
@@ -49,7 +53,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                   const Icon(Icons.refresh, color: Colors.red, size: 48),
                   const SizedBox(height: 16),
                   const Text(
-                    'Failed to load page',
+                    AppStrings.failedToLoadPage,
                     style: TextStyle(color: Colors.red, fontSize: 16),
                   ),
                   const SizedBox(height: 8),
@@ -57,7 +61,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                     width: 100,
                     child: ElevatedButton.icon(
                       icon: const Icon(Icons.refresh),
-                      label: const Text('Reload'),
+                      label: const Text(AppStrings.reload),
                       onPressed: () {
                         setState(() {
                           _errorMessage = null;
@@ -70,33 +74,33 @@ class _WebViewScreenState extends State<WebViewScreen> {
               ),
             )
           : Column(
-              spacing: 16,
               children: [
-                if (widget.showBackButton) const SizedBox(height: 36),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    children: [
-                      if (widget.showBackButton)
-                        IconButton(
-                          onPressed: () => Navigator.pop(context),
-                          icon: const Icon(Icons.arrow_back),
-                        ),
-                      const Spacer(),
-                      Center(
-                        child: Text(
-                          widget.title ?? 'WebView',
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
+                if (widget.showBackButton) const SizedBox(height: 16),
+                if (!widget.fromHome)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Row(
+                      children: [
+                        if (widget.showBackButton)
+                          IconButton(
+                            onPressed: () => Navigator.pop(context),
+                            icon: const Icon(Icons.arrow_back),
+                          ),
+                        const Spacer(),
+                        Center(
+                          child: Text(
+                            widget.title ?? " ",
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(width: 36),
-                      const Spacer(),
-                    ],
+                        const SizedBox(width: 36),
+                        const Spacer(),
+                      ],
+                    ),
                   ),
-                ),
                 Expanded(child: WebViewWidget(controller: _controller)),
               ],
             ),

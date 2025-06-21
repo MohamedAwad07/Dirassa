@@ -14,6 +14,7 @@ class ThemeToggle extends StatelessWidget {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, state) {
         final isDarkMode = state.themeMode == ThemeMode.dark;
+        final isLoading = state.status == ThemeStatus.loading;
 
         return Row(
           mainAxisSize: MainAxisSize.min,
@@ -51,9 +52,11 @@ class ThemeToggle extends StatelessWidget {
             Switch(
               activeColor: AppColors.secondary,
               value: isDarkMode,
-              onChanged: (value) {
-                context.read<ThemeCubit>().toggleTheme();
-              },
+              onChanged: isLoading
+                  ? null
+                  : (value) {
+                      context.read<ThemeCubit>().toggleTheme();
+                    },
             ),
           ],
         );

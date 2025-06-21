@@ -1,12 +1,18 @@
 import 'package:dirassa/core/components/webview_screen.dart';
 import 'package:dirassa/core/services/screenshot_prevention.dart';
+import 'package:dirassa/core/utils/app_strings.dart';
 import 'package:dirassa/viewmodels/cubits/url_cubit/url_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileView extends StatefulWidget {
   final bool fromSettings;
-  const ProfileView({super.key, this.fromSettings = false});
+  final bool showAppBar;
+  const ProfileView({
+    super.key,
+    this.fromSettings = false,
+    this.showAppBar = false,
+  });
 
   @override
   State<ProfileView> createState() => _ProfileViewState();
@@ -36,6 +42,7 @@ class _ProfileViewState extends State<ProfileView> {
             return Scaffold(
               appBar: AppBar(automaticallyImplyLeading: widget.fromSettings),
               body: WebViewScreen(
+                fromHome: true,
                 url: urlState.profileUrl!,
                 showBackButton: false,
                 title: 'الحساب الشخصي',
@@ -44,6 +51,7 @@ class _ProfileViewState extends State<ProfileView> {
           }
           return Scaffold(
             body: WebViewScreen(
+              fromHome: true,
               url: urlState.profileUrl!,
               showBackButton: false,
               title: 'الحساب الشخصي',
@@ -51,30 +59,24 @@ class _ProfileViewState extends State<ProfileView> {
           );
         } else {
           // Show loading or error state
-          return Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (urlState.status == UrlStatus.loading)
-                    const CircularProgressIndicator()
-                  else
-                    const Icon(
-                      Icons.error_outline,
-                      size: 48,
-                      color: Colors.red,
-                    ),
-                  const SizedBox(height: 16),
-                  Text(
-                    urlState.status == UrlStatus.loading
-                        ? 'Loading...'
-                        : 'Failed to load profile page',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ],
+          if (widget.showAppBar) {
+            return Scaffold(
+              body: WebViewScreen(
+                title: AppStrings.profile,
+                url: "https://www.google.com",
+                fromHome: widget.showAppBar,
+                showBackButton: false,
               ),
-            ),
-          );
+            );
+          } else if (widget.fromSettings) {
+            return Scaffold(
+              body: WebViewScreen(
+                showBackButton: widget.fromSettings,
+                url: "https://www.google.com",
+              ),
+            );
+          }
+          return const SizedBox.shrink();
         }
       },
     );

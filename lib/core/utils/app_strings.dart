@@ -14,8 +14,7 @@ class AppStrings {
   static const String loginButton = 'تسجيل الدخول';
   static const String loginError = 'يجب أن يكون لديك كل البيانات المطلوبة';
   static const String loginNoAccount = 'ليس لديك حساب؟ سجل الآن';
-  static const String loginEmail = 'البريد الإلكتروني';
-  static const String loginPhone = 'رقم الهاتف';
+  static const String loginName = 'اسم المستخدم';
   static const String loginPassword = 'كلمة المرور';
 
   // Register
@@ -25,6 +24,10 @@ class AppStrings {
   static const String registerDescription =
       'بمجرد التسجيل , انت توافق علي الشروط والأحكام';
   static const String urlNotAvailable = 'الرابط غير متاح حاليا';
+  static const String failedToLoadPage = 'فشل تحميل الصفحة';
+  static const String reload = 'إعادة المحاولة';
+  static const String webView = 'WebView';
+  static const String loading = 'جاري التحميل...';
   // Home/Drawer
   static const String home = 'الرئيسية';
   static const String profile = 'الملف الشخصي';

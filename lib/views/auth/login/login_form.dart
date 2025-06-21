@@ -17,23 +17,18 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   bool _obscureText = true;
-  bool _rememberMe = false;
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _nameController.dispose();
     _passwordController.dispose();
-    _phoneController.dispose();
     super.dispose();
   }
 
   void _onLoginPressed(BuildContext context) {
-    if (_emailController.text.isEmpty ||
-        _phoneController.text.isEmpty ||
-        _passwordController.text.isEmpty) {
+    if (_nameController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Center(child: Text(AppStrings.loginError))),
       );
@@ -51,7 +46,7 @@ class _LoginFormState extends State<LoginForm> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 24),
+          const SizedBox(height: 24 * 3),
           const Text(
             AppStrings.loginTitle,
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -68,23 +63,10 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 24),
           const AppLogo(),
           CustomTextField(
-            keyboardType: TextInputType.emailAddress,
-            controller: _emailController,
-            label: AppStrings.loginEmail,
-            prefixIcon: SvgPicture.asset(
-              Assets.assetsIconsLoginMail,
-              colorFilter: const ColorFilter.mode(
-                AppColors.primary,
-                BlendMode.srcIn,
-              ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          CustomTextField(
-            keyboardType: TextInputType.phone,
-            controller: _phoneController,
-            label: AppStrings.loginPhone,
-            prefixIcon: const Icon(Icons.phone, color: AppColors.primary),
+            keyboardType: TextInputType.name,
+            controller: _nameController,
+            label: AppStrings.loginName,
+            prefixIcon: const Icon(Icons.person, color: AppColors.primary),
           ),
           const SizedBox(height: 12),
           CustomTextField(
@@ -113,14 +95,6 @@ class _LoginFormState extends State<LoginForm> {
             },
           ),
           const SizedBox(height: 12),
-          RememberMeCheckbox(
-            value: _rememberMe,
-            onChanged: (value) {
-              setState(() {
-                _rememberMe = value ?? false;
-              });
-            },
-          ),
           const SizedBox(height: 24),
           CustomButton(
             text: AppStrings.loginButton,
@@ -133,29 +107,6 @@ class _LoginFormState extends State<LoginForm> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class RememberMeCheckbox extends StatelessWidget {
-  final bool value;
-  final ValueChanged<bool?> onChanged;
-  const RememberMeCheckbox({
-    required this.value,
-    required this.onChanged,
-    super.key,
-  });
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Checkbox(
-          value: value,
-          onChanged: onChanged,
-          activeColor: AppColors.secondary,
-        ),
-        const Text('تذكرني'),
-      ],
     );
   }
 }

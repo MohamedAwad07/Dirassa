@@ -28,41 +28,50 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<UrlCubit, UrlState>(
       builder: (context, urlState) {
-        if (urlState.homeUrl != null) {
-          return Scaffold(
-            body: WebViewScreen(
-              url: urlState.homeUrl!,
-              showBackButton: false,
-              title: 'الجلسات المباشرة',
-            ),
-          );
-        } else {
-          // Show loading or error state
-          return Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (urlState.status == UrlStatus.loading)
-                    const CircularProgressIndicator()
-                  else
-                    const Icon(
-                      Icons.error_outline,
-                      size: 48,
-                      color: Colors.red,
-                    ),
-                  const SizedBox(height: 16),
-                  Text(
-                    urlState.status == UrlStatus.loading
-                        ? 'Loading...'
-                        : 'Failed to load home page',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
-          );
-        }
+        //   if (urlState.homeUrl != null) {
+        //     return Scaffold(
+        //       body: WebViewScreen(
+        //         url: urlState.homeUrl!,
+        //         showBackButton: false,
+        //         title: AppStrings.home,
+        //       ),
+        //     );
+        //   } else {
+        //     return Scaffold(
+        //       body: Center(
+        //         child: Column(
+        //           mainAxisAlignment: MainAxisAlignment.center,
+        //           children: [
+        //             if (urlState.status == UrlStatus.loading)
+        //               const CircularProgressIndicator(
+        //                 color: AppColors.primary,
+        //               )
+        //             else
+        //               const Icon(
+        //                 Icons.error_outline,
+        //                 size: 48,
+        //                 color: Colors.red,
+        //               ),
+        //             const SizedBox(height: 16),
+        //             Text(
+        //               urlState.status == UrlStatus.loading
+        //                   ? AppStrings.loading
+        //                   : AppStrings.failedToLoadPage,
+        //               style: const TextStyle(fontSize: 16),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     );
+        //   }
+        // },
+        return const Scaffold(
+          body: WebViewScreen(
+            fromHome: true,
+            url: "https://www.google.com",
+            showBackButton: false,
+          ),
+        );
       },
     );
   }
