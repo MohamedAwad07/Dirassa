@@ -4,7 +4,9 @@ import 'package:dirassa/core/components/custom_text_button.dart';
 import 'package:dirassa/core/components/custom_text_field.dart';
 import 'package:dirassa/core/utils/app_assets.dart';
 import 'package:dirassa/core/utils/app_colors.dart';
+import 'package:dirassa/viewmodels/cubits/url_cubit/url_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/utils/app_strings.dart';
 
@@ -27,7 +29,7 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
-  void _onLoginPressed(BuildContext context) {
+  void _onLoginPressed(BuildContext context, String? loginUrl) {
     if (_nameController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Center(child: Text(AppStrings.loginError))),
@@ -96,9 +98,13 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: 12),
           const SizedBox(height: 24),
-          CustomButton(
-            text: AppStrings.loginButton,
-            onPressed: () => _onLoginPressed(context),
+          BlocBuilder<UrlCubit, UrlState>(
+            builder: (context, state) {
+              return CustomButton(
+                text: AppStrings.loginButton,
+                onPressed: () => _onLoginPressed(context, state.loginUrl),
+              );
+            },
           ),
           const SizedBox(height: 16),
           CustomTextButton(

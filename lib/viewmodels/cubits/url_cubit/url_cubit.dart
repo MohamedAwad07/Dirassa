@@ -18,6 +18,7 @@ class UrlCubit extends Cubit<UrlState> {
           homeUrl: config.homeUrl,
           profileUrl: config.profileUrl,
           registerUrl: config.registerUrl,
+          loginUrl: config.loginUrl,
         ),
       );
     } catch (e) {

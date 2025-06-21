@@ -9,6 +9,13 @@ class AuthInitial extends AuthState {}
 
 class AuthLoading extends AuthState {}
 
+class AuthLoginUrl extends AuthState {
+  final String loginUrl;
+  AuthLoginUrl({required this.loginUrl});
+  @override
+  List<Object?> get props => [loginUrl];
+}
+
 class AuthAuthenticated extends AuthState {
   final String email;
   AuthAuthenticated({required this.email});
