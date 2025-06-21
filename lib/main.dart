@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/utils/app_router.dart';
+import 'core/utils/status_bar_config.dart';
 import 'viewmodels/cubits/auth_cubit/auth_cubit.dart';
 import 'viewmodels/cubits/theme_cubit/theme_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeCubit, ThemeState>(
       builder: (context, themeState) {
+        // Configure status bar based on theme
+        StatusBarConfig.setStatusBarForTheme(themeState.themeMode);
+
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: AppStrings.appName,

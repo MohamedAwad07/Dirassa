@@ -15,52 +15,50 @@ class RegisterView extends StatefulWidget {
 class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(36),
-          child: Column(
-            spacing: 24,
-            children: [
-              const Spacer(),
-              Image.asset(
-                Assets.assetsImagesRegisterLanding,
-                height: 150,
-                width: double.infinity,
-                fit: BoxFit.contain,
-              ),
-              const Text(
-                AppStrings.registerTitle,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              const Text(
-                AppStrings.registerDescription,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12),
-              ),
-              CustomButton(
-                text: AppStrings.registerButton,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const WebViewScreen(
-                        url: 'https://www.google.com',
-                        title: 'Google',
-                      ),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(36),
+        child: Column(
+          spacing: 24,
+          children: [
+            const Spacer(),
+            Image.asset(
+              Assets.assetsImagesRegisterLanding,
+              height: 150,
+              width: double.infinity,
+              fit: BoxFit.contain,
+            ),
+            const Text(
+              AppStrings.registerTitle,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            const Text(
+              AppStrings.registerDescription,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12),
+            ),
+            CustomButton(
+              text: AppStrings.registerButton,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const WebViewScreen(
+                      url: 'https://www.google.com',
+                      title: 'Google',
                     ),
-                  );
-                },
-              ),
-              CustomTextButton(
-                text: AppStrings.registerHasAccount,
-                onPressed: () {
-                  Navigator.pushNamed(context, '/login');
-                },
-              ),
-              const Spacer(),
-            ],
-          ),
+                  ),
+                );
+              },
+            ),
+            CustomTextButton(
+              text: AppStrings.registerHasAccount,
+              onPressed: () {
+                Navigator.pushNamed(context, '/login');
+              },
+            ),
+            const Spacer(),
+          ],
         ),
       ),
     );

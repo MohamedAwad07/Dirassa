@@ -8,20 +8,18 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            const Expanded(child: SingleChildScrollView(child: LoginForm())),
-            Image.asset(
-              Assets.assetsImagesLoginLanding2,
-              color: AppColors.primary,
-              height: 100,
-              width: double.infinity,
-              fit: BoxFit.fill,
-            ),
-          ],
-        ),
+    return Scaffold(
+      body: Column(
+        children: [
+          const Expanded(child: SingleChildScrollView(child: LoginForm())),
+          Image.asset(
+            Assets.assetsImagesLoginLanding2,
+            color: AppColors.primary,
+            height: 150,
+            width: double.infinity,
+            fit: BoxFit.fill,
+          ),
+        ],
       ),
     );
   }

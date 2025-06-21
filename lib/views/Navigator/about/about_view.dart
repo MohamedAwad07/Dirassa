@@ -97,7 +97,7 @@ class AboutView extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 32 * 2),
           ],
         ),
       ),
