@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/utils/app_router.dart';
 import 'core/utils/status_bar_config.dart';
+import 'core/utils/screenshot_prevention.dart';
 import 'viewmodels/cubits/auth_cubit/auth_cubit.dart';
 import 'viewmodels/cubits/theme_cubit/theme_cubit.dart';
 import 'viewmodels/cubits/connectivity_cubit/connectivity_cubit.dart';
@@ -10,9 +11,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/utils/app_strings.dart';
 import 'core/utils/app_theme.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = Observe();
+
+  // Initialize screenshot prevention
+  await ScreenshotPrevention.initialize();
+
   runApp(
     MultiBlocProvider(
       providers: [
