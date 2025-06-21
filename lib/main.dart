@@ -1,3 +1,4 @@
+import 'package:dirassa/bloc_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/utils/app_router.dart';
@@ -10,6 +11,8 @@ import 'core/utils/app_strings.dart';
 import 'core/utils/app_theme.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = Observe();
   runApp(
     MultiBlocProvider(
       providers: [
