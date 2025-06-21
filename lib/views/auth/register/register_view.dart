@@ -3,7 +3,7 @@ import 'package:dirassa/core/components/custom_text_button.dart';
 import 'package:dirassa/core/components/webview_screen.dart';
 import 'package:dirassa/core/utils/app_assets.dart';
 import 'package:dirassa/core/utils/app_strings.dart';
-import 'package:dirassa/core/utils/screenshot_prevention.dart';
+import 'package:dirassa/core/services/screenshot_prevention.dart';
 import 'package:flutter/material.dart';
 
 class RegisterView extends StatefulWidget {

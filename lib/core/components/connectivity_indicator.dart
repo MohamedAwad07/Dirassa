@@ -30,11 +30,11 @@ class ConnectivityIndicator extends StatelessWidget {
             break;
           case ConnectivityStatus.disconnected:
             icon = Icons.wifi_off;
-            color = disconnectedColor ?? Colors.red;
+            color = disconnectedColor ?? Colors.red.withValues(alpha: 0.7);
             break;
           case ConnectivityStatus.unknown:
             icon = Icons.help_outline;
-            color = theme.colorScheme.onSurface.withOpacity(0.6);
+            color = theme.colorScheme.onSurface.withValues(alpha: 0.6);
             break;
         }
 

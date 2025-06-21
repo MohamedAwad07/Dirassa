@@ -45,7 +45,7 @@ class _ConnectionErrorViewState extends State<ConnectionErrorView> {
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.error.withOpacity(0.1),
+                      color: theme.colorScheme.error.withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -73,7 +73,7 @@ class _ConnectionErrorViewState extends State<ConnectionErrorView> {
                   Text(
                     AppStrings.connectionErrorBody,
                     style: theme.textTheme.bodyLarge?.copyWith(
-                      color: theme.colorScheme.onSurface.withOpacity(0.7),
+                      color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -150,10 +150,14 @@ class _ConnectionErrorViewState extends State<ConnectionErrorView> {
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: theme.colorScheme.primary.withOpacity(0.1),
+                            color: theme.colorScheme.primary.withValues(
+                              alpha: 0.1,
+                            ),
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: theme.colorScheme.primary.withOpacity(0.3),
+                              color: theme.colorScheme.primary.withValues(
+                                alpha: 0.3,
+                              ),
                             ),
                           ),
                           child: Row(

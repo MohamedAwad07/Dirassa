@@ -96,7 +96,7 @@ class AppTheme {
         }),
         trackColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.secondary.withOpacity(0.5);
+            return AppColors.secondary.withValues(alpha: 0.5);
           }
           return Colors.grey[300];
         }),
@@ -206,7 +206,7 @@ class AppTheme {
         }),
         trackColor: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
-            return AppColors.secondary.withOpacity(0.5);
+            return AppColors.secondary.withValues(alpha: 0.5);
           }
           return const Color(0xFF404040);
         }),

@@ -1,5 +1,5 @@
 import 'package:dirassa/core/components/webview_screen.dart';
-import 'package:dirassa/core/utils/screenshot_prevention.dart';
+import 'package:dirassa/core/services/screenshot_prevention.dart';
 import 'package:flutter/material.dart';
 
 class ProfileView extends StatefulWidget {
