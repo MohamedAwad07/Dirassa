@@ -24,6 +24,7 @@ class AppStrings {
   static const String registerHasAccount = 'لديك حساب بالفعل؟ سجل الدخول';
   static const String registerDescription =
       'بمجرد التسجيل , انت توافق علي الشروط والأحكام';
+  static const String urlNotAvailable = 'الرابط غير متاح حاليا';
   // Home/Drawer
   static const String home = 'الرئيسية';
   static const String profile = 'الملف الشخصي';

@@ -7,6 +7,7 @@ import 'core/services/screenshot_prevention.dart';
 import 'viewmodels/cubits/auth_cubit/auth_cubit.dart';
 import 'viewmodels/cubits/theme_cubit/theme_cubit.dart';
 import 'viewmodels/cubits/connectivity_cubit/connectivity_cubit.dart';
+import 'viewmodels/cubits/url_cubit/url_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/utils/app_strings.dart';
 import 'core/utils/app_theme.dart';
@@ -23,6 +24,7 @@ void main() async {
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => ThemeCubit()),
         BlocProvider(create: (_) => ConnectivityCubit()),
+        BlocProvider(create: (_) => UrlCubit()),
       ],
       child: const MyApp(),
     ),

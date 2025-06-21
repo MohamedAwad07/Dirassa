@@ -1,6 +1,8 @@
 import 'package:dirassa/core/components/webview_screen.dart';
 import 'package:dirassa/core/services/screenshot_prevention.dart';
+import 'package:dirassa/viewmodels/cubits/url_cubit/url_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,12 +26,44 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: WebViewScreen(
-        url: 'https://www.google.com',
-        showBackButton: false,
-        title: 'الجلسات المباشرة',
-      ),
+    return BlocBuilder<UrlCubit, UrlState>(
+      builder: (context, urlState) {
+        if (urlState.homeUrl != null) {
+          return Scaffold(
+            body: WebViewScreen(
+              url: urlState.homeUrl!,
+              showBackButton: false,
+              title: 'الجلسات المباشرة',
+            ),
+          );
+        } else {
+          // Show loading or error state
+          return Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (urlState.status == UrlStatus.loading)
+                    const CircularProgressIndicator()
+                  else
+                    const Icon(
+                      Icons.error_outline,
+                      size: 48,
+                      color: Colors.red,
+                    ),
+                  const SizedBox(height: 16),
+                  Text(
+                    urlState.status == UrlStatus.loading
+                        ? 'Loading...'
+                        : 'Failed to load home page',
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 }
