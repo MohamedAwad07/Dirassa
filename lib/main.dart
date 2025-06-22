@@ -1,5 +1,6 @@
 import 'package:dirassa/bloc_observer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/utils/app_router.dart';
 import 'core/services/status_bar_config.dart';
@@ -16,6 +17,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = Observe();
   await ScreenshotPrevention.initialize();
+
+  // Set preferred orientations to allow both portrait and landscape
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ]);
 
   runApp(
     MultiBlocProvider(
