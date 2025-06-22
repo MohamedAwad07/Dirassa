@@ -36,15 +36,16 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UrlCubit, UrlState>(
-      builder: (context, urlState) {
-        if (urlState.profileUrl != null) {
+    return BlocSelector<UrlCubit, UrlState, String?>(
+      selector: (state) => state.profileUrl,
+      builder: (context, profileUrl) {
+        if (profileUrl != null) {
           if (widget.fromSettings) {
             return Scaffold(
               appBar: AppBar(automaticallyImplyLeading: widget.fromSettings),
               body: WebViewScreen(
                 fromHome: true,
-                url: urlState.profileUrl!,
+                url: profileUrl,
                 showBackButton: false,
               ),
             );
@@ -52,34 +53,41 @@ class _ProfileViewState extends State<ProfileView> {
           return Scaffold(
             body: WebViewScreen(
               fromHome: true,
-              url: urlState.profileUrl!,
+              url: profileUrl,
               showBackButton: false,
             ),
           );
         } else {
-          return Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (urlState.status == UrlStatus.loading)
-                    const CircularProgressIndicator(color: AppColors.primary)
-                  else
-                    const Icon(
-                      Icons.error_outline,
-                      size: 48,
-                      color: Colors.red,
-                    ),
-                  const SizedBox(height: 16),
-                  Text(
-                    urlState.status == UrlStatus.loading
-                        ? AppStrings.loading
-                        : AppStrings.failedToLoadPage,
-                    style: const TextStyle(fontSize: 16),
+          return BlocSelector<UrlCubit, UrlState, UrlStatus>(
+            selector: (state) => state.status,
+            builder: (context, status) {
+              return Scaffold(
+                body: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (status == UrlStatus.loading)
+                        const CircularProgressIndicator(
+                          color: AppColors.primary,
+                        )
+                      else
+                        const Icon(
+                          Icons.error_outline,
+                          size: 48,
+                          color: Colors.red,
+                        ),
+                      const SizedBox(height: 16),
+                      Text(
+                        status == UrlStatus.loading
+                            ? AppStrings.loading
+                            : AppStrings.failedToLoadPage,
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           );
         }
       },

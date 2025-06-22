@@ -32,8 +32,9 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UrlCubit, UrlState>(
-      builder: (context, urlState) {
+    return BlocSelector<UrlCubit, UrlState, String?>(
+      selector: (state) => state.registerUrl,
+      builder: (context, registerUrl) {
         return Scaffold(
           body: Padding(
             padding: const EdgeInsets.all(36),
@@ -58,13 +59,13 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
                 CustomButton(
                   text: AppStrings.registerButton,
-                  onPressed: urlState.registerUrl != null
+                  onPressed: registerUrl != null
                       ? () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (_) => WebViewScreen(
-                                url: urlState.registerUrl!,
+                                url: registerUrl,
                                 title: AppStrings.registerTitle,
                               ),
                             ),

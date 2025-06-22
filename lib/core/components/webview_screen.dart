@@ -28,42 +28,55 @@ class _WebViewScreenState extends State<WebViewScreen> {
   String? _errorMessage;
   bool _isRedirecting = false;
   bool _sessionHandled = false;
+  bool _isInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    _controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(Colors.white)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onWebResourceError: (error) {
-            setState(() {
-              _errorMessage = error.description;
-            });
-          },
-          onNavigationRequest: (NavigationRequest request) {
-            // Check if the URL contains "no_session_available"
-            if (request.url.contains('no_session_available')) {
-              log(
-                '🔍 WebView: Session expired detected in URL: ${request.url}',
-              );
-              _handleSessionExpired();
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },
-          onPageFinished: (String url) {
-            // Also check on page finish in case of redirects
-            if (url.contains('no_session_available')) {
-              log('🔍 WebView: Session expired detected on page finish: $url');
-              _handleSessionExpired();
-            }
-          },
-        ),
-      )
-      ..enableZoom(false)
-      ..loadRequest(Uri.parse(widget.url));
+    _initializeController();
+  }
+
+  void _initializeController() {
+    if (!_isInitialized) {
+      _controller = WebViewController()
+        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+        ..setBackgroundColor(Colors.white)
+        ..setNavigationDelegate(
+          NavigationDelegate(
+            onWebResourceError: (error) {
+              if (mounted) {
+                setState(() {
+                  _errorMessage = error.description;
+                });
+              }
+            },
+            onNavigationRequest: (NavigationRequest request) {
+              // Check if the URL contains "no_session_available"
+              if (request.url.contains('012')) {
+                log(
+                  '🔍 WebView: Session expired detected in URL: ${request.url}',
+                );
+                _handleSessionExpired();
+                return NavigationDecision.prevent;
+              }
+              return NavigationDecision.navigate;
+            },
+            onPageFinished: (String url) {
+              // Also check on page finish in case of redirects
+              if (url.contains('012')) {
+                log(
+                  '🔍 WebView: Session expired detected on page finish: $url',
+                );
+                _handleSessionExpired();
+              }
+            },
+          ),
+        )
+        ..enableZoom(false)
+        ..loadRequest(Uri.parse(widget.url));
+
+      _isInitialized = true;
+    }
   }
 
   void _handleSessionExpired() async {
@@ -156,7 +169,14 @@ class _WebViewScreenState extends State<WebViewScreen> {
                           ],
                         ),
                       ),
-                    Expanded(child: WebViewWidget(controller: _controller)),
+                    Expanded(
+                      child: RepaintBoundary(
+                        child: WebViewWidget(
+                          key: ValueKey('webview_${widget.url}'),
+                          controller: _controller,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
           // Redirecting overlay

@@ -40,15 +40,16 @@ class MyApp extends StatelessWidget {
     // Set navigator key for screenshot prevention
     ScreenshotPrevention.setNavigatorKey(navigatorKey);
 
-    return BlocBuilder<ThemeCubit, ThemeState>(
-      builder: (context, themeState) {
-        StatusBarConfig.setStatusBarForTheme(themeState.themeMode);
+    return BlocSelector<ThemeCubit, ThemeState, ThemeMode>(
+      selector: (state) => state.themeMode,
+      builder: (context, themeMode) {
+        StatusBarConfig.setStatusBarForTheme(themeMode);
 
         return MaterialApp(
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           title: AppStrings.appName,
-          themeMode: themeState.themeMode,
+          themeMode: themeMode,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           locale: const Locale('ar'),

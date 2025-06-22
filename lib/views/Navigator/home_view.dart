@@ -2,8 +2,11 @@ import 'package:dirassa/core/utils/app_assets.dart';
 import 'package:dirassa/core/utils/app_colors.dart';
 import 'package:dirassa/core/components/connectivity_indicator.dart';
 import 'package:dirassa/core/components/connectivity_wrapper.dart';
+import 'package:dirassa/viewmodels/cubits/auth_cubit/auth_cubit.dart';
 import 'package:dirassa/views/Navigator/home_screen/home_screen.dart';
+import 'package:dirassa/views/confirmation_dialog/confirmation_dialog_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'profile/profile_view.dart';
 import 'settings/settings_view.dart';
 import '../../core/utils/app_strings.dart';
@@ -133,7 +136,19 @@ class _HomeViewState extends State<HomeView> {
               ListTile(
                 leading: const Icon(Icons.logout, color: Colors.red),
                 title: const Text(AppStrings.logout),
-                onTap: () => Navigator.pushReplacementNamed(context, '/login'),
+                onTap: () async {
+                  final shouldLogout = await showDialog<bool>(
+                    context: context,
+                    builder: (context) => const ConfirmationDialogView(),
+                  );
+
+                  if (shouldLogout == true) {
+                    if (context.mounted) {
+                      context.read<AuthCubit>().logout();
+                      Navigator.pushReplacementNamed(context, '/login');
+                    }
+                  }
+                },
               ),
             ],
           ),

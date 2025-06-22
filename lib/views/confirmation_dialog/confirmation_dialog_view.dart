@@ -2,43 +2,64 @@ import 'package:flutter/material.dart';
 import '../../core/utils/app_strings.dart';
 
 class ConfirmationDialogView extends StatelessWidget {
-  final int dialogType; // 1 or 2, to select which dialog to show
-  const ConfirmationDialogView({super.key, this.dialogType = 1});
+  const ConfirmationDialogView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final String imageAsset = dialogType == 1
-        ? 'assets/images/confirmation_dialog_1.png'
-        : 'assets/images/confirmation_dialog_2.png';
+    return _buildLogoutDialog(context);
+  }
+
+  Widget _buildLogoutDialog(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(imageAsset, height: 120),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.red.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.logout, color: Colors.red, size: 48),
+            ),
             const SizedBox(height: 24),
             const Text(
-              AppStrings.confirmationTitle,
+              AppStrings.logoutConfirmationTitle,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             const Text(
-              AppStrings.confirmationBody,
+              AppStrings.logoutConfirmationBody,
               textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(false),
-                  child: const Text(AppStrings.confirmationCancel),
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    child: const Text(AppStrings.confirmationCancel),
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: const Text(AppStrings.confirmationConfirm),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    child: const Text(AppStrings.logout),
+                  ),
                 ),
               ],
             ),

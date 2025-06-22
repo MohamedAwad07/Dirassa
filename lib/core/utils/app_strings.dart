@@ -65,6 +65,7 @@ class AppStrings {
   // Settings
   static const String settingsAccount = 'الحساب';
   static const String appMode = 'الوضع الليلي';
+  static const String appModeLight = 'الوضع النهاري';
   static const String settingsPrivacy = 'الخصوصية';
   static const String settingsHelp = 'المساعدة والدعم';
 
@@ -87,6 +88,11 @@ class AppStrings {
   static const String confirmationBody = 'هل تريد المتابعة بهذا الإجراء؟';
   static const String confirmationCancel = 'إلغاء';
   static const String confirmationConfirm = 'تأكيد';
+
+  // Logout Confirmation
+  static const String logoutConfirmationTitle = 'تسجيل الخروج';
+  static const String logoutConfirmationBody =
+      'هل أنت متأكد من أنك تريد تسجيل الخروج؟';
 
   // API Error Messages
   static const String apiConnectionTimeout = 'انتهت مهلة الاتصال';
