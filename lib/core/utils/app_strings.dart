@@ -77,6 +77,11 @@ class AppStrings {
   static const String connectionRestored = 'تم استعادة الاتصال بنجاح';
   static const String connectionConnected = 'متصل بالإنترنت';
 
+  // Session Expiration
+  static const String sessionExpiredTitle = 'انتهت صلاحية الجلسة';
+  static const String sessionExpiredMessage =
+      'انتهت صلاحية جلستك. جاري التوجيه إلى صفحة تسجيل الدخول...';
+
   // Confirmation Dialog
   static const String confirmationTitle = 'هل أنت متأكد؟';
   static const String confirmationBody = 'هل تريد المتابعة بهذا الإجراء؟';
