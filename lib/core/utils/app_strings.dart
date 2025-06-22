@@ -88,6 +88,22 @@ class AppStrings {
   static const String confirmationCancel = 'إلغاء';
   static const String confirmationConfirm = 'تأكيد';
 
+  // API Error Messages
+  static const String apiConnectionTimeout = 'انتهت مهلة الاتصال';
+  static const String apiSendTimeout = 'انتهت مهلة الإرسال';
+  static const String apiReceiveTimeout = 'انتهت مهلة الاستقبال';
+  static const String apiBadResponse = 'خطأ في الاستجابة من الخادم';
+  static const String apiRequestCancelled = 'تم إلغاء الطلب';
+  static const String apiNoInternet = 'لا يوجد اتصال بالإنترنت';
+  static const String apiNetworkError = 'خطأ في الشبكة';
+  static const String apiUnknownError = 'خطأ غير متوقع';
+  static const String apiInvalidCredentials =
+      'اسم المستخدم أو كلمة المرور غير صحيحة';
+  static const String apiBadRequest = 'بيانات غير صحيحة - تحقق من المدخلات';
+  static const String apiServerError = 'خطأ في الخادم';
+  static const String apiConfigLoadError = 'فشل في تحميل الإعدادات';
+  static const String apiLoginFailed = 'فشل في تسجيل الدخول';
+
   // Copyright
   static const String copyright = 'حقوق الطبع والنشر © 2025';
 

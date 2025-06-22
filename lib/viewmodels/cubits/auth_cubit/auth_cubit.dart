@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:dirassa/core/functions/api_handler.dart';
 import 'package:dirassa/core/services/token_storage_service.dart';
+import 'package:dirassa/core/utils/app_strings.dart';
 import 'package:dirassa/models/Login/login_request.dart';
 import 'package:dirassa/models/Login/login_response.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,27 +39,42 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       log('🔍 AuthCubit: Error checking cached token: $e');
       // If there's an error, stay in initial state
+      emit(AuthInitial());
     }
   }
 
   void login(LoginRequest loginRequest) async {
     log('🔍 AuthCubit: Login started');
     emit(AuthLoading());
-    final LoginResponse loginResponse = await loginUser(loginRequest);
 
-    if (loginResponse.success == true) {
-      final token = loginResponse.token ?? '';
-      log('🔍 AuthCubit: Login successful, saving token');
-      // Cache the token
-      await TokenStorageService.saveToken(token);
-      emit(AuthAuthenticated(token: token));
+    try {
+      final ApiResponse<LoginResponse> apiResponse = await loginUser(
+        loginRequest,
+      );
 
-      // Log token info after saving
-      final remainingDays = await TokenStorageService.getRemainingDays();
-      log('🔍 AuthCubit: Token saved, remaining days: $remainingDays');
-    } else {
-      log('🔍 AuthCubit: Login failed: ${loginResponse.message}');
-      emit(AuthError(loginResponse.message ?? ''));
+      if (apiResponse.success && apiResponse.data != null) {
+        final loginResponse = apiResponse.data!;
+        if (loginResponse.success == true) {
+          final token = loginResponse.token ?? '';
+          log('🔍 AuthCubit: Login successful, saving token');
+          // Cache the token
+          await TokenStorageService.saveToken(token);
+          emit(AuthAuthenticated(token: token));
+
+          // Log token info after saving
+          final remainingDays = await TokenStorageService.getRemainingDays();
+          log('🔍 AuthCubit: Token saved, remaining days: $remainingDays');
+        } else {
+          log('🔍 AuthCubit: Login failed: ${loginResponse.message}');
+          emit(AuthError(loginResponse.message ?? AppStrings.apiLoginFailed));
+        }
+      } else {
+        log('🔍 AuthCubit: API Error: ${apiResponse.message}');
+        emit(AuthError(apiResponse.message));
+      }
+    } catch (e) {
+      log('🔍 AuthCubit: Unexpected error during login: $e');
+      emit(AuthError(AppStrings.apiUnknownError));
     }
   }
 

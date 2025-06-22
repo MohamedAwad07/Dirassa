@@ -4,6 +4,30 @@ import 'package:dio/dio.dart';
 import 'package:dirassa/models/config_response.dart';
 import 'package:dirassa/models/Login/login_request.dart';
 import 'package:dirassa/models/Login/login_response.dart';
+import 'package:dirassa/core/utils/app_strings.dart';
+
+// Custom API response class
+class ApiResponse<T> {
+  final bool success;
+  final T? data;
+  final String message;
+  final String? errorCode;
+
+  ApiResponse({
+    required this.success,
+    this.data,
+    required this.message,
+    this.errorCode,
+  });
+
+  factory ApiResponse.success(T data, [String message = 'Success']) {
+    return ApiResponse(success: true, data: data, message: message);
+  }
+
+  factory ApiResponse.error(String message, [String? errorCode]) {
+    return ApiResponse(success: false, message: message, errorCode: errorCode);
+  }
+}
 
 // Dio handler class
 class DioHandler {
@@ -33,7 +57,7 @@ class DioHandler {
   }
 }
 
-Future<ConfigResponse> fetchConfig() async {
+Future<ApiResponse<ConfigResponse>> fetchConfig() async {
   // Initialize Dio handler
   final dioHandler = DioHandler();
   dioHandler.init();
@@ -42,33 +66,45 @@ Future<ConfigResponse> fetchConfig() async {
     final response = await dioHandler.dio.get(DioHandler.configUrl);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      return ConfigResponse.fromJson(response.data);
+      return ApiResponse.success(ConfigResponse.fromJson(response.data));
     } else {
-      throw Exception('Failed to load config: ${response.statusCode}');
+      return ApiResponse.error(
+        AppStrings.apiConfigLoadError,
+        'CONFIG_LOAD_ERROR',
+      );
     }
   } on DioException catch (e) {
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
-        throw Exception('Connection timeout');
+        return ApiResponse.error(
+          AppStrings.apiConnectionTimeout,
+          'CONNECTION_TIMEOUT',
+        );
       case DioExceptionType.sendTimeout:
-        throw Exception('Send timeout');
+        return ApiResponse.error(AppStrings.apiSendTimeout, 'SEND_TIMEOUT');
       case DioExceptionType.receiveTimeout:
-        throw Exception('Receive timeout');
+        return ApiResponse.error(
+          AppStrings.apiReceiveTimeout,
+          'RECEIVE_TIMEOUT',
+        );
       case DioExceptionType.badResponse:
-        throw Exception('Bad response: ${e.response?.statusCode}');
+        return ApiResponse.error(AppStrings.apiBadResponse, 'BAD_RESPONSE');
       case DioExceptionType.cancel:
-        throw Exception('Request cancelled');
+        return ApiResponse.error(
+          AppStrings.apiRequestCancelled,
+          'REQUEST_CANCELLED',
+        );
       case DioExceptionType.connectionError:
-        throw Exception('No internet connection');
+        return ApiResponse.error(AppStrings.apiNoInternet, 'NO_INTERNET');
       default:
-        throw Exception('Network error: ${e.message}');
+        return ApiResponse.error(AppStrings.apiNetworkError, 'NETWORK_ERROR');
     }
   } catch (e) {
-    throw Exception('Error fetching config: $e');
+    return ApiResponse.error(AppStrings.apiUnknownError, 'UNKNOWN_ERROR');
   }
 }
 
-Future<LoginResponse> loginUser(LoginRequest loginRequest) async {
+Future<ApiResponse<LoginResponse>> loginUser(LoginRequest loginRequest) async {
   log('loginRequest: ${loginRequest.toJson()}');
   // Initialize Dio handler
   final dioHandler = DioHandler();
@@ -83,35 +119,47 @@ Future<LoginResponse> loginUser(LoginRequest loginRequest) async {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       log('loginResponse: ${response.data}');
-      return LoginResponse.fromJson(response.data);
+      return ApiResponse.success(LoginResponse.fromJson(response.data));
     } else {
-      throw Exception('Login failed: ${response.statusCode}');
+      return ApiResponse.error(AppStrings.apiLoginFailed, 'LOGIN_FAILED');
     }
   } on DioException catch (e) {
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
-        throw Exception('Connection timeout');
+        return ApiResponse.error(
+          AppStrings.apiConnectionTimeout,
+          'CONNECTION_TIMEOUT',
+        );
       case DioExceptionType.sendTimeout:
-        throw Exception('Send timeout');
+        return ApiResponse.error(AppStrings.apiSendTimeout, 'SEND_TIMEOUT');
       case DioExceptionType.receiveTimeout:
-        throw Exception('Receive timeout');
+        return ApiResponse.error(
+          AppStrings.apiReceiveTimeout,
+          'RECEIVE_TIMEOUT',
+        );
       case DioExceptionType.badResponse:
         // Handle specific HTTP error responses
         if (e.response?.statusCode == 401) {
-          throw Exception('Invalid credentials');
+          return ApiResponse.error(
+            AppStrings.apiInvalidCredentials,
+            'INVALID_CREDENTIALS',
+          );
         } else if (e.response?.statusCode == 400) {
-          throw Exception('Bad request - check your input');
+          return ApiResponse.error(AppStrings.apiBadRequest, 'BAD_REQUEST');
         } else {
-          throw Exception('Server error: ${e.response?.statusCode}');
+          return ApiResponse.error(AppStrings.apiServerError, 'SERVER_ERROR');
         }
       case DioExceptionType.cancel:
-        throw Exception('Request cancelled');
+        return ApiResponse.error(
+          AppStrings.apiRequestCancelled,
+          'REQUEST_CANCELLED',
+        );
       case DioExceptionType.connectionError:
-        throw Exception('No internet connection');
+        return ApiResponse.error(AppStrings.apiNoInternet, 'NO_INTERNET');
       default:
-        throw Exception('Network error: ${e.message}');
+        return ApiResponse.error(AppStrings.apiNetworkError, 'NETWORK_ERROR');
     }
   } catch (e) {
-    throw Exception('Error during login: $e');
+    return ApiResponse.error(AppStrings.apiUnknownError, 'UNKNOWN_ERROR');
   }
 }
