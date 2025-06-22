@@ -93,42 +93,45 @@ class AppStrings {
 
   // AboutView
   static const String aboutIntro =
-      'دراسة هي منصة تعليمية ذكية تم إنشاؤها لتبسيط وتعزيز تجربة التعلم. نحن نؤمن بأن التعليم يجب أن يكون متاحًا ومنظمًا وجذابًا. لهذا السبب تجمع دراسة كل ما تحتاجه للتعلم والإدارة والنمو في تطبيق واحد سهل الاستخدام.';
-  static const String aboutFeaturesHeader = 'مميزات دراسة';
+      'منصة دراسة هي منصة تعليمية رقمية تهدف إلى تقديم محتوى دراسي مبسّط، منظم، وعملي، مصمم بعناية ليناسب احتياجات الطلاب في مختلف المستويات الدراسية.\n\n'
+      'نركز على إيصال المعرفة بأسلوب واضح، حديث، وباستخدام وسائل مرئية تجعل الفهم أسرع والمراجعة أكثر فاعلية.\n\n'
+      'نحن نؤمن بأن التعليم لا يجب أن يكون معقدًا، بل يمكن أن يكون سهلًا، ممتعًا، وقريبًا من واقع الطلاب. لذلك توفر منصة دراسة بيئة تعليمية تجمع بين جودة المحتوى، وسهولة التصفح.';
+  static const String aboutFeaturesHeader = 'رؤيتنا';
   static const String aboutFeature1 =
-      'الوصول إلى الموارد التعليمية بسهولة وكفاءة.';
+      'أن نكون المرجع الأول للتعليم عن بعد في البلاد ، من خلال تقديم محتوى علمي دقيق، سهل الفهم، ومتاح للجميع.';
   static const String aboutFeature2 =
-      'إدارة جداول الدراسة والروتين والمواد بطريقة منظمة.';
-  static const String aboutFeature3 =
-      'تتبع التقدم من خلال لوحات معلومات وتقارير مخصصة.';
+      'إتاحة التعليم المبسط والواضح للجميع، دون حواجز أو تعقيدات، من خلال تقديم دروس مرئية عالية التنظيم والدقة.';
+  static const String aboutFeature3 = 'محتوى عالي الجودة وشرح مبسّط.';
   static const String aboutFeature4 =
-      'الاتصال بالمحتوى الخارجي عبر تكامل Web View السلس.';
-  static const String aboutMissionHeader = 'رسالتنا';
-  static const String aboutMission =
-      'نحن ملتزمون بالتحسين المستمر والابتكار في تكنولوجيا التعليم، لمساعدة المتعلمين على البقاء متحفزين ومركزين والتحكم في رحلتهم التعليمية.';
-  static const String aboutJoinHeader = 'انضم إلينا';
-  static const String aboutJoin =
-      'سواء كنت طالبًا تبحث عن تنظيم دراستك، أو معلمًا يهدف إلى توجيه المتعلمين، أو ولي أمر يرغب في البقاء على اطلاع — توفر دراسة الأدوات والبساطة اللازمة للنجاح. انضم إلينا واتخذ الخطوة الأولى نحو تعلم أكثر ذكاءً.';
+      'تنظيم واضح للمواد والدروس حسب المستوى و التخصص.';
+  static const String aboutMissionHeader = 'ما يميزنا';
+  static const String aboutMission1 =
+      'إمكانية التفاعل والمناقشة داخل مجموعات دراسية منظمة.';
+  static const String aboutMission2 = 'موارد تعليمية مساعدة ومتجددة.';
+  static const String aboutMission3 = 'دعم فني مستمر وواجهة استخدام سهلة.';
+  static const String aboutJoinHeader = 'للمزيد من المعلومات';
+  static const String aboutJoin = 'زوروا موقعنا : https://dirassa.online';
 
   // PrivacyPolicyView
-  static const String privacyIntroHeader = 'مقدمة';
+  static const String privacyIntroHeader = 'سياسة الخصوصية';
   static const String privacyIntro =
-      'خصوصيتك مهمة بالنسبة لنا. إنها سياسة "Brainstorming" أن نحترم خصوصيتك فيما يتعلق بأي معلومات قد نجمعها منك عبر موقعنا الإلكتروني، أو أي مواقع أخرى نملكها ونديرها.';
-  static const String privacyInfoHeader = 'المعلومات التي نجمعها';
+      'في منصة دراسة، نحرص على خصوصيتك ونلتزم بحماية معلوماتك الشخصية عند استخدامك لخدماتنا.';
+  static const String privacyInfoHeader = 'المعلومات التي نقوم بجمعها';
   static const String privacyInfo =
-      'نطلب المعلومات الشخصية فقط عندما نحتاج إليها حقًا لتقديم خدمة لك. نقوم بجمعها بوسائل عادلة وقانونية، وبعلمك وموافقتك. كما نوضح لك سبب جمعها وكيف سيتم استخدامها.';
-  static const String privacyCookiesHeader = 'ملفات تعريف الارتباط (Cookies)';
+      'بيانات الحساب: مثل الاسم، رقم الهاتف، والتخصص (عند التسجيل).\n\n'
+      'أنشطة المستخدم داخل المنصة: مثل التعليقات والتفاعلات داخل المجموعات الدراسية.';
+  static const String privacyCookiesHeader = 'استخدام المعلومات';
   static const String privacyCookies =
-      'قد نستخدم "ملفات تعريف الارتباط" لتحسين تجربتك على موقعنا. يمكنك اختيار رفض ملفات تعريف الارتباط من خلال إعدادات المتصفح الخاص بك، لكن قد يؤثر ذلك على بعض وظائف الموقع.';
-  static const String privacyRightsHeader = 'حقوق المستخدم';
+      'تحسين تجربة المستخدم: من خلال تكييف المحتوى وتنظيمه بما يتناسب مع تخصص المستخدم.\n\n'
+      'الدعم الفني والتواصلي: لحل المشكلات التقنية والرد على الاستفسارات المتعلقة باستخدام المنصة.';
+  static const String privacyRightsHeader = 'حماية البيانات';
   static const String privacyRight1 =
-      'يحق لك الوصول إلى بياناتك الشخصية التي نحتفظ بها.';
+      'نلتزم باتخاذ التدابير اللازمة لحماية بياناتك الشخصية من أي استخدام أو وصول أو تعديل أو إفشاء غير مصرح به.';
   static const String privacyRight2 =
-      'يحق لك طلب تصحيح أو حذف بياناتك إذا كانت غير دقيقة أو لم تعد ضرورية.';
-  static const String privacyChangesHeader = 'تغييرات السياسة';
+      'لا نشارك بيانات المستخدمين مع أي أطراف ثالثة إلا إذا تطلب القانون ذلك.';
+  static const String privacyChangesHeader = 'حقوق المستخدم';
   static const String privacyChanges =
-      'قد نقوم بتحديث سياسة الخصوصية من وقت لآخر. سنخطرك بأي تغييرات من خلال نشر السياسة الجديدة على هذه الصفحة.';
-  static const String privacyContactHeader = 'التواصل معنا';
-  static const String privacyContact =
-      'إذا كان لديك أي أسئلة حول كيفية تعاملنا مع بياناتك أو حول سياسة الخصوصية هذه، يرجى التواصل معنا عبر البريد الإلكتروني.';
+      'يمكن للمستخدم طلب تعديل أو حذف بياناته في أي وقت.';
+  static const String privacyContactHeader = 'للمزيد من المعلومات';
+  static const String privacyContact = 'زوروا موقعنا : https://dirassa.online';
 }
