@@ -3,6 +3,7 @@ import 'package:dirassa/core/components/custom_text_button.dart';
 import 'package:dirassa/core/components/webview_screen.dart';
 import 'package:dirassa/core/utils/app_assets.dart';
 import 'package:dirassa/core/utils/app_strings.dart';
+import 'package:dirassa/core/utils/app_colors.dart';
 import 'package:dirassa/core/services/screenshot_prevention.dart';
 import 'package:dirassa/viewmodels/cubits/url_cubit/url_cubit.dart';
 import 'package:flutter/material.dart';
@@ -124,10 +125,29 @@ class _RegisterViewState extends State<RegisterView> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 8),
-                        const Text(
-                          AppStrings.registerDescription,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 12),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                          child: GestureDetector(
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/privacy-policy'),
+                            child: const Text.rich(
+                              TextSpan(
+                                text: AppStrings.loginDescription,
+                                style: TextStyle(fontSize: 12),
+                                children: [
+                                  TextSpan(
+                                    text: AppStrings.privacyPolicy,
+                                    style: TextStyle(
+                                      color: AppColors.secondary,
+                                      decoration: TextDecoration.underline,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                         ),
                         SizedBox(
                           height:

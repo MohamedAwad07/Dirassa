@@ -68,11 +68,7 @@ class _HomeViewState extends State<HomeView> {
           ),
           body: IndexedStack(
             index: _currentIndex,
-            children: const [
-              HomeScreen(),
-              ProfileView(fromSettings: false, showAppBar: true),
-              SettingsView(),
-            ],
+            children: const [HomeScreen(), SettingsView()],
           ),
           drawer: Drawer(
             child: ListView(
@@ -100,9 +96,9 @@ class _HomeViewState extends State<HomeView> {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.person, color: AppColors.primary),
+                  leading: const Icon(Icons.settings, color: AppColors.primary),
                   title: Text(
-                    AppStrings.profile,
+                    AppStrings.settings,
                     style: TextStyle(
                       color: _currentIndex == 1
                           ? AppColors.secondary
@@ -114,25 +110,6 @@ class _HomeViewState extends State<HomeView> {
                   onTap: () {
                     setState(() {
                       _currentIndex = 1;
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.settings, color: AppColors.primary),
-                  title: Text(
-                    AppStrings.settings,
-                    style: TextStyle(
-                      color: _currentIndex == 2
-                          ? AppColors.secondary
-                          : theme.textTheme.bodyLarge?.color,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  selected: _currentIndex == 2,
-                  onTap: () {
-                    setState(() {
-                      _currentIndex = 2;
                     });
                     Navigator.pop(context);
                   },
@@ -159,7 +136,6 @@ class _HomeViewState extends State<HomeView> {
                       context: context,
                       builder: (context) => const ConfirmationDialogView(),
                     );
-
                     if (shouldLogout == true) {
                       if (context.mounted) {
                         context.read<AuthCubit>().logout();

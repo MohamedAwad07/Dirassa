@@ -9,12 +9,11 @@ class AppStrings {
   // Login
   static const String loginTitle = 'تسجيل الدخول';
   static const String logout = 'تسجيل الخروج';
-  static const String loginDescription =
-      'بمجرد الدخول , انت توافق علي الشروط والأحكام';
+  static const String loginDescription = 'يرجى مراجعة ';
   static const String loginButton = 'تسجيل الدخول';
   static const String loginError = 'يجب أن يكون لديك كل البيانات المطلوبة';
   static const String loginNoAccount = 'ليس لديك حساب؟ سجل الآن';
-  static const String loginName = 'اسم المستخدم';
+  static const String loginName = ' اسم المستخدم او رقم الهاتف';
   static const String loginPassword = 'كلمة المرور';
 
   // Register
@@ -161,7 +160,7 @@ class AppStrings {
   static const String privacyContact = 'زوروا موقعنا : https://dirassa.online';
 
   // Double back to exit
-  static const String doubleBackToExit = 'اضغط مرة أخرى للخروج من التطبيق';
+  static const String doubleBackToExit = 'اضغط مرة أخرى للخروج';
 
   // Connectivity Status
   static const String connectivityWifi = 'واي فاي';

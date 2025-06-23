@@ -83,15 +83,6 @@ class _LoginFormState extends State<LoginForm> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 24),
-            const Align(
-              alignment: Alignment.center,
-              child: Text(
-                textAlign: TextAlign.center,
-                AppStrings.loginDescription,
-                style: TextStyle(fontSize: 12),
-              ),
-            ),
-            const SizedBox(height: 24),
             const AppLogo(),
             CustomTextField(
               keyboardType: TextInputType.name,
@@ -126,6 +117,29 @@ class _LoginFormState extends State<LoginForm> {
               },
             ),
             const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12.0),
+              child: GestureDetector(
+                onTap: () => Navigator.pushNamed(context, '/privacy-policy'),
+                child: const Text.rich(
+                  TextSpan(
+                    text: AppStrings.loginDescription,
+                    style: TextStyle(fontSize: 12),
+                    children: [
+                      TextSpan(
+                        text: AppStrings.privacyPolicy,
+                        style: TextStyle(
+                          color: AppColors.secondary,
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
             const SizedBox(height: 24),
             BlocBuilder<UrlCubit, UrlState>(
               builder: (context, state) {
