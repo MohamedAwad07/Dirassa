@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return Scaffold(
                 body: WebViewScreen(
                   fromHome: true,
-                  url: '$homeUrl?token=$token',
+                  url: '$homeUrl?user_token=$token',
                   showBackButton: false,
                   userAgent: userAgent,
                 ),
