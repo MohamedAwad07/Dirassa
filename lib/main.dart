@@ -29,10 +29,16 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => AuthCubit()),
-        BlocProvider(create: (_) => ThemeCubit()),
-        BlocProvider(create: (_) => ConnectivityCubit()),
-        BlocProvider(create: (_) => UrlCubit()),
+        BlocProvider<AuthCubit>(create: (context) => AuthCubit(), lazy: false),
+        BlocProvider<ThemeCubit>(
+          create: (context) => ThemeCubit(),
+          lazy: false,
+        ),
+        BlocProvider<ConnectivityCubit>(
+          create: (context) => ConnectivityCubit(),
+          lazy: false,
+        ),
+        BlocProvider<UrlCubit>(create: (context) => UrlCubit(), lazy: true),
       ],
       child: const MyApp(),
     ),

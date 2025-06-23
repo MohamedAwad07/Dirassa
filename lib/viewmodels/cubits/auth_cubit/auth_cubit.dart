@@ -11,7 +11,14 @@ part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial()) {
-    _checkCachedToken();
+    // Initialize token checking after the cubit is created
+    _initializeTokenCheck();
+  }
+
+  /// Initialize token checking without blocking the constructor
+  void _initializeTokenCheck() {
+    // Use a microtask to avoid blocking the constructor
+    Future.microtask(() => _checkCachedToken());
   }
 
   /// Check for cached token on app startup

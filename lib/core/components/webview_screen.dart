@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:dirassa/core/services/token_storage_service.dart';
+import 'package:dirassa/core/utils/app_colors.dart';
 import 'package:dirassa/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -38,44 +39,56 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
   void _initializeController() {
     if (!_isInitialized) {
-      _controller = WebViewController()
-        ..setJavaScriptMode(JavaScriptMode.unrestricted)
-        ..setBackgroundColor(Colors.white)
-        ..setNavigationDelegate(
-          NavigationDelegate(
-            onWebResourceError: (error) {
-              if (mounted) {
-                setState(() {
-                  _errorMessage = error.description;
-                });
-              }
-            },
-            onNavigationRequest: (NavigationRequest request) {
-              // Check if the URL contains "no_session_available"
-              if (request.url.contains('012')) {
-                log(
-                  '🔍 WebView: Session expired detected in URL: ${request.url}',
-                );
-                _handleSessionExpired();
-                return NavigationDecision.prevent;
-              }
-              return NavigationDecision.navigate;
-            },
-            onPageFinished: (String url) {
-              // Also check on page finish in case of redirects
-              if (url.contains('012')) {
-                log(
-                  '🔍 WebView: Session expired detected on page finish: $url',
-                );
-                _handleSessionExpired();
-              }
-            },
-          ),
-        )
-        ..enableZoom(false)
-        ..loadRequest(Uri.parse(widget.url));
+      try {
+        _controller = WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..setBackgroundColor(Colors.white)
+          ..setNavigationDelegate(
+            NavigationDelegate(
+              onWebResourceError: (error) {
+                if (mounted) {
+                  setState(() {
+                    _errorMessage = error.description;
+                  });
+                }
+              },
+              onNavigationRequest: (NavigationRequest request) {
+                // Check if the URL contains "no_session_available"
+                if (request.url.contains('012')) {
+                  log(
+                    '🔍 WebView: Session expired detected in URL: ${request.url}',
+                  );
+                  _handleSessionExpired();
+                  return NavigationDecision.prevent;
+                }
+                return NavigationDecision.navigate;
+              },
+              onPageFinished: (String url) {
+                // Also check on page finish in case of redirects
+                if (url.contains('012')) {
+                  log(
+                    '🔍 WebView: Session expired detected on page finish: $url',
+                  );
+                  _handleSessionExpired();
+                }
+              },
+            ),
+          )
+          ..enableZoom(false)
+          ..setUserAgent(
+            'Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36',
+          )
+          ..loadRequest(Uri.parse(widget.url));
 
-      _isInitialized = true;
+        _isInitialized = true;
+      } catch (e) {
+        log('🔍 WebView: Error initializing controller: $e');
+        if (mounted) {
+          setState(() {
+            _errorMessage = 'Failed to initialize WebView: $e';
+          });
+        }
+      }
     }
   }
 
@@ -106,9 +119,17 @@ class _WebViewScreenState extends State<WebViewScreen> {
     }
   }
 
+  void _retryLoading() {
+    setState(() {
+      _errorMessage = null;
+      _isInitialized = false;
+      _sessionHandled = false;
+    });
+    _initializeController();
+  }
+
   @override
   Widget build(BuildContext context) {
-    log(widget.url);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
@@ -125,17 +146,20 @@ class _WebViewScreenState extends State<WebViewScreen> {
                         style: TextStyle(color: Colors.red, fontSize: 16),
                       ),
                       const SizedBox(height: 8),
-                      SizedBox(
-                        width: 100,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
                         child: ElevatedButton.icon(
+                          onPressed: _retryLoading,
                           icon: const Icon(Icons.refresh),
                           label: const Text(AppStrings.reload),
-                          onPressed: () {
-                            setState(() {
-                              _errorMessage = null;
-                            });
-                            _controller.loadRequest(Uri.parse(widget.url));
-                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 12,
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -171,10 +195,12 @@ class _WebViewScreenState extends State<WebViewScreen> {
                       ),
                     Expanded(
                       child: RepaintBoundary(
-                        child: WebViewWidget(
-                          key: ValueKey('webview_${widget.url}'),
-                          controller: _controller,
-                        ),
+                        child: _isInitialized
+                            ? WebViewWidget(
+                                key: ValueKey('webview_${widget.url}'),
+                                controller: _controller,
+                              )
+                            : const Center(child: CircularProgressIndicator()),
                       ),
                     ),
                   ],

@@ -30,6 +30,42 @@ class _RegisterViewState extends State<RegisterView> {
     super.dispose();
   }
 
+  void _retryLoading() {
+    context.read<UrlCubit>().fetchUrls();
+  }
+
+  void _showRetrySnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Row(
+              children: [
+                Icon(Icons.error_outline, color: Colors.white),
+                SizedBox(width: 8),
+                Expanded(child: Text(AppStrings.urlNotAvailable)),
+              ],
+            ),
+            const SizedBox(height: 8),
+            TextButton(
+              onPressed: _retryLoading,
+              child: const Text(
+                AppStrings.reload,
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 6),
+        behavior: SnackBarBehavior.floating,
+        margin: const EdgeInsets.all(16),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocSelector<UrlCubit, UrlState, String?>(
@@ -109,15 +145,7 @@ class _RegisterViewState extends State<RegisterView> {
                                     ),
                                   );
                                 }
-                              : () {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Center(
-                                        child: Text(AppStrings.urlNotAvailable),
-                                      ),
-                                    ),
-                                  );
-                                },
+                              : _showRetrySnackBar,
                         ),
                         const SizedBox(height: 16),
                         CustomTextButton(

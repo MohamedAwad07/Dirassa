@@ -27,6 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  void _retryLoading() {
+    context.read<UrlCubit>().fetchUrls();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocSelector<UrlCubit, UrlState, String?>(
@@ -69,6 +73,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                 : AppStrings.failedToLoadPage,
                             style: const TextStyle(fontSize: 16),
                           ),
+                          if (status != UrlStatus.loading) ...[
+                            const SizedBox(height: 16),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                              ),
+                              child: ElevatedButton.icon(
+                                onPressed: _retryLoading,
+                                icon: const Icon(Icons.refresh),
+                                label: const Text(AppStrings.reload),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primary,
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24,
+                                    vertical: 12,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ],
                       ),
                     ),
