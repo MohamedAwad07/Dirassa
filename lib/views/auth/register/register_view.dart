@@ -157,7 +157,11 @@ class _RegisterViewState extends State<RegisterView> {
                         CustomTextButton(
                           text: AppStrings.registerHasAccount,
                           onPressed: () {
-                            Navigator.pushNamed(context, '/login');
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/login',
+                              (route) => false,
+                            );
                           },
                         ),
                         if (MediaQuery.of(context).orientation ==

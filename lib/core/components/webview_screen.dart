@@ -48,7 +48,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
           ..setNavigationDelegate(
             NavigationDelegate(
               onWebResourceError: (error) {
-                if (mounted) {
+                if (error.isForMainFrame == true && mounted) {
                   setState(() {
                     _errorMessage = error.description;
                   });
@@ -65,15 +65,15 @@ class _WebViewScreenState extends State<WebViewScreen> {
                 }
                 return NavigationDecision.navigate;
               },
-              onPageFinished: (String url) {
-                // Also check on page finish in case of redirects
-                if (url.contains('no_session_available')) {
-                  log(
-                    '🔍 WebView: Session expired detected on page finish: $url',
-                  );
-                  _handleSessionExpired();
-                }
-              },
+              // onPageFinished: (String url) {
+              //   // Also check on page finish in case of redirects
+              //   if (url.contains('no_session_available')) {
+              //     log(
+              //       '🔍 WebView: Session expired detected on page finish: $url',
+              //     );
+              //     _handleSessionExpired();
+              //   }
+              // },
             ),
           )
           ..enableZoom(false)
@@ -125,162 +125,179 @@ class _WebViewScreenState extends State<WebViewScreen> {
   void _retryLoading() {
     setState(() {
       _errorMessage = null;
-      _isInitialized = false;
       _sessionHandled = false;
     });
-    _initializeController();
+    if (_isInitialized) {
+      _controller.loadRequest(Uri.parse(widget.url));
+    } else {
+      _initializeController();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     log('userAgent: ${widget.userAgent}');
     log('url: ${widget.url}');
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Stack(
-        children: [
-          _errorMessage != null
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.refresh, color: Colors.red, size: 48),
-                      const SizedBox(height: 16),
-                      const Text(
-                        AppStrings.failedToLoadPage,
-                        style: TextStyle(color: Colors.red, fontSize: 16),
-                      ),
-                      const SizedBox(height: 8),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: ElevatedButton.icon(
-                          onPressed: _retryLoading,
-                          icon: const Icon(Icons.refresh),
-                          label: const Text(AppStrings.reload),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: AppColors.white,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 24,
-                              vertical: 12,
+    return WillPopScope(
+      onWillPop: () async {
+        if (_isInitialized && await _controller.canGoBack()) {
+          _controller.goBack();
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        body: Stack(
+          children: [
+            _errorMessage != null
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.refresh, color: Colors.red, size: 48),
+                        const SizedBox(height: 16),
+                        const Text(
+                          AppStrings.failedToLoadPage,
+                          style: TextStyle(color: Colors.red, fontSize: 16),
+                        ),
+                        const SizedBox(height: 8),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: ElevatedButton.icon(
+                            onPressed: _retryLoading,
+                            icon: const Icon(Icons.refresh),
+                            label: const Text(AppStrings.reload),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primary,
+                              foregroundColor: AppColors.white,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 12,
+                              ),
                             ),
                           ),
+                        ),
+                      ],
+                    ),
+                  )
+                : Column(
+                    children: [
+                      if (widget.showBackButton) const SizedBox(height: 16),
+                      if (!widget.fromHome)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4),
+                          child: Row(
+                            children: [
+                              if (widget.showBackButton)
+                                IconButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  icon: const Icon(Icons.arrow_back),
+                                ),
+                              const Spacer(),
+                              Center(
+                                child: Text(
+                                  widget.title ?? " ",
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 36),
+                              const Spacer(),
+                            ],
+                          ),
+                        ),
+                      Expanded(
+                        child: RepaintBoundary(
+                          child: _isInitialized
+                              ? WebViewWidget(
+                                  key: ValueKey('webview_${widget.url}'),
+                                  controller: _controller,
+                                )
+                              : const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
                         ),
                       ),
                     ],
                   ),
-                )
-              : Column(
-                  children: [
-                    if (widget.showBackButton) const SizedBox(height: 16),
-                    if (!widget.fromHome)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4),
-                        child: Row(
+            // Redirecting overlay
+            if (_isRedirecting)
+              Container(
+                color: Colors.black54,
+                child: SafeArea(
+                  child: Center(
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(16),
+                      child: Container(
+                        margin: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.surface,
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.1),
+                              blurRadius: 10,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            if (widget.showBackButton)
-                              IconButton(
-                                onPressed: () => Navigator.pop(context),
-                                icon: const Icon(Icons.arrow_back),
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withValues(alpha: 0.1),
+                                shape: BoxShape.circle,
                               ),
-                            const Spacer(),
-                            Center(
-                              child: Text(
-                                widget.title ?? " ",
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                              child: const Icon(
+                                Icons.warning_amber_rounded,
+                                color: AppColors.primary,
+                                size: 48,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            const Text(
+                              AppStrings.sessionExpiredTitle,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              AppStrings.sessionExpiredMessage,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  AppColors.primary,
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 36),
-                            const Spacer(),
                           ],
                         ),
-                      ),
-                    Expanded(
-                      child: RepaintBoundary(
-                        child: _isInitialized
-                            ? WebViewWidget(
-                                key: ValueKey('webview_${widget.url}'),
-                                controller: _controller,
-                              )
-                            : const Center(child: CircularProgressIndicator()),
-                      ),
-                    ),
-                  ],
-                ),
-          // Redirecting overlay
-          if (_isRedirecting)
-            Container(
-              color: Colors.black54,
-              child: SafeArea(
-                child: Center(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(16),
-                    child: Container(
-                      margin: const EdgeInsets.all(16),
-                      padding: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.1),
-                            blurRadius: 10,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: AppColors.primary.withValues(alpha: 0.1),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.warning_amber_rounded,
-                              color: AppColors.primary,
-                              size: 48,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          const Text(
-                            AppStrings.sessionExpiredTitle,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          const Text(
-                            AppStrings.sessionExpiredMessage,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 14, color: Colors.grey),
-                          ),
-                          const SizedBox(height: 16),
-                          const SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                AppColors.primary,
-                              ),
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }
