@@ -33,6 +33,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 
   void _onLoginPressed(BuildContext context, String? loginUrl) async {
+    FocusScope.of(context).unfocus();
     if (_nameController.text.isEmpty || _passwordController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Center(child: Text(AppStrings.loginError))),
