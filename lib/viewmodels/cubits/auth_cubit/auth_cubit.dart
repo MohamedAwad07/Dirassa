@@ -108,4 +108,8 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logTokenInfo() async {
     await TokenStorageService.logTokenInfo();
   }
+
+  void reset() {
+    emit(AuthInitial());
+  }
 }

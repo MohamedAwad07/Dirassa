@@ -85,7 +85,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
         log('🔍 WebView: Error initializing controller: $e');
         if (mounted) {
           setState(() {
-            _errorMessage = 'Failed to initialize WebView: $e';
+            _errorMessage = '${AppStrings.webViewInitFailed}: $e';
           });
         }
       }

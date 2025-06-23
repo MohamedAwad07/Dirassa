@@ -135,6 +135,9 @@ class AppStrings {
   static const String aboutJoin = 'زوروا موقعنا : https://dirassa.online';
 
   // PrivacyPolicyView
+  static const String screenshotDetected = 'تم اكتشاف التقاط الشاشة';
+  static const String screenshotNotAllowed =
+      'لا يمكن التقاط الشاشة لأمان البيانات';
   static const String privacyIntroHeader = 'سياسة الخصوصية';
   static const String privacyIntro =
       'في منصة دراسة، نحرص على خصوصيتك ونلتزم بحماية معلوماتك الشخصية عند استخدامك لخدماتنا.';
@@ -159,4 +162,15 @@ class AppStrings {
 
   // Double back to exit
   static const String doubleBackToExit = 'اضغط مرة أخرى للخروج من التطبيق';
+
+  // Connectivity Status
+  static const String connectivityWifi = 'واي فاي';
+  static const String connectivityMobileData = 'بيانات الهاتف';
+  static const String connectivityEthernet = 'إيثرنت';
+  static const String connectivityNoConnection = 'لا يوجد اتصال';
+  static const String connectivityUnknown = 'غير معروف';
+  static const String connectivityError = 'خطأ';
+
+  // WebView
+  static const String webViewInitFailed = 'فشل في تهيئة صفحة الويب';
 }

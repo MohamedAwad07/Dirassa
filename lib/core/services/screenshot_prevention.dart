@@ -1,3 +1,4 @@
+import 'package:dirassa/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
@@ -322,10 +323,10 @@ class _ScreenshotPreventionMessageState
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          'Screenshot Detected',
+                          AppStrings.screenshotDetected,
                           style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.bold,
                             color:
                                 Theme.of(context).brightness == Brightness.dark
                                 ? Colors.white
@@ -334,7 +335,7 @@ class _ScreenshotPreventionMessageState
                         ),
                         const SizedBox(height: 2),
                         Text(
-                          'Screenshots are not allowed for security reasons',
+                          AppStrings.screenshotNotAllowed,
                           style: TextStyle(
                             fontSize: 14,
                             color:

@@ -1,4 +1,5 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dirassa/core/utils/app_strings.dart';
 
 class ConnectivityService {
   static final ConnectivityService _instance = ConnectivityService._internal();
@@ -62,18 +63,18 @@ class ConnectivityService {
       final result = await _connectivity.checkConnectivity();
       switch (result) {
         case ConnectivityResult.wifi:
-          return 'WiFi';
+          return AppStrings.connectivityWifi;
         case ConnectivityResult.mobile:
-          return 'Mobile Data';
+          return AppStrings.connectivityMobileData;
         case ConnectivityResult.ethernet:
-          return 'Ethernet';
+          return AppStrings.connectivityEthernet;
         case ConnectivityResult.none:
-          return 'No Connection';
+          return AppStrings.connectivityNoConnection;
         default:
-          return 'Unknown';
+          return AppStrings.connectivityUnknown;
       }
     } catch (e) {
-      return 'Error';
+      return AppStrings.connectivityError;
     }
   }
 }
