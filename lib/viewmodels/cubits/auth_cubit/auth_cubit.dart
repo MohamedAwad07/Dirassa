@@ -50,12 +50,13 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void login(LoginRequest loginRequest) async {
+  void login(String loginUrl, LoginRequest loginRequest) async {
     log('🔍 AuthCubit: Login started');
     emit(AuthLoading());
 
     try {
       final ApiResponse<LoginResponse> apiResponse = await loginUser(
+        loginUrl,
         loginRequest,
       );
 

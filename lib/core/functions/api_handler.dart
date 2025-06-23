@@ -6,7 +6,6 @@ import 'package:dirassa/models/Login/login_request.dart';
 import 'package:dirassa/models/Login/login_response.dart';
 import 'package:dirassa/core/utils/app_strings.dart';
 
-// Custom API response class
 class ApiResponse<T> {
   final bool success;
   final T? data;
@@ -38,7 +37,6 @@ class DioHandler {
   late Dio _dio;
   static const String baseUrl = 'https://dirassa.online/api';
   static const String configUrl = '$baseUrl/config/app_links.php';
-  static const String loginUrl = '$baseUrl/config/login/';
   Dio get dio => _dio;
 
   void init() {
@@ -104,8 +102,12 @@ Future<ApiResponse<ConfigResponse>> fetchConfig() async {
   }
 }
 
-Future<ApiResponse<LoginResponse>> loginUser(LoginRequest loginRequest) async {
-  log('loginRequest: ${loginRequest.toJson()}');
+Future<ApiResponse<LoginResponse>> loginUser(
+  String loginUrl,
+  LoginRequest loginRequest,
+) async {
+  log('loginUrl: $loginUrl');
+  log('loginRequest: [36m${loginRequest.toJson()}[0m');
   // Initialize Dio handler
   final dioHandler = DioHandler();
   dioHandler.init();
@@ -113,7 +115,7 @@ Future<ApiResponse<LoginResponse>> loginUser(LoginRequest loginRequest) async {
   try {
     // Create login request
     final response = await dioHandler.dio.post(
-      DioHandler.loginUrl,
+      loginUrl,
       data: loginRequest.toJson(),
     );
 

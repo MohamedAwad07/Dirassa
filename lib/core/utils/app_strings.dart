@@ -156,4 +156,7 @@ class AppStrings {
       'يمكن للمستخدم طلب تعديل أو حذف بياناته في أي وقت.';
   static const String privacyContactHeader = 'للمزيد من المعلومات';
   static const String privacyContact = 'زوروا موقعنا : https://dirassa.online';
+
+  // Double back to exit
+  static const String doubleBackToExit = 'اضغط مرة أخرى للخروج من التطبيق';
 }

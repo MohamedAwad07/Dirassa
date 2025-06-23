@@ -54,7 +54,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
               },
               onNavigationRequest: (NavigationRequest request) {
                 // Check if the URL contains "no_session_available"
-                if (request.url.contains('no_session_available')) {
+                if (request.url.contains('123f')) {
                   log(
                     '🔍 WebView: Session expired detected in URL: ${request.url}',
                   );
@@ -65,7 +65,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
               },
               onPageFinished: (String url) {
                 // Also check on page finish in case of redirects
-                if (url.contains('no_session_available')) {
+                if (url.contains('123f')) {
                   log(
                     '🔍 WebView: Session expired detected on page finish: $url',
                   );
@@ -154,7 +154,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                           label: const Text(AppStrings.reload),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.primary,
-                            foregroundColor: Colors.white,
+                            foregroundColor: AppColors.white,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 24,
                               vertical: 12,
@@ -230,12 +230,12 @@ class _WebViewScreenState extends State<WebViewScreen> {
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.orange.withValues(alpha: 0.1),
+                          color: AppColors.primary.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(
                           Icons.warning_amber_rounded,
-                          color: Colors.orange,
+                          color: AppColors.primary,
                           size: 48,
                         ),
                       ),
@@ -245,7 +245,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Colors.orange,
+                          color: AppColors.primary,
                         ),
                       ),
                       const SizedBox(height: 8),
@@ -261,7 +261,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
                           valueColor: AlwaysStoppedAnimation<Color>(
-                            Colors.orange,
+                            AppColors.primary,
                           ),
                         ),
                       ),
