@@ -54,7 +54,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
               },
               onNavigationRequest: (NavigationRequest request) {
                 // Check if the URL contains "no_session_available"
-                if (request.url.contains('012')) {
+                if (request.url.contains('no_session_available')) {
                   log(
                     '🔍 WebView: Session expired detected in URL: ${request.url}',
                   );
@@ -65,7 +65,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
               },
               onPageFinished: (String url) {
                 // Also check on page finish in case of redirects
-                if (url.contains('012')) {
+                if (url.contains('no_session_available')) {
                   log(
                     '🔍 WebView: Session expired detected on page finish: $url',
                   );
