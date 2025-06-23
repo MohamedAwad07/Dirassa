@@ -100,7 +100,7 @@ class _SplashViewState extends State<SplashView> {
       });
       Future.delayed(const Duration(milliseconds: 800), () {
         if (!mounted) return;
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
       });
     });
   }
@@ -113,7 +113,7 @@ class _SplashViewState extends State<SplashView> {
       });
       Future.delayed(const Duration(milliseconds: 800), () {
         if (!mounted) return;
-        Navigator.pushReplacementNamed(context, '/login');
+        Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
       });
     });
   }

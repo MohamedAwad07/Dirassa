@@ -145,7 +145,11 @@ class _HomeViewState extends State<HomeView> {
                   if (shouldLogout == true) {
                     if (context.mounted) {
                       context.read<AuthCubit>().logout();
-                      Navigator.pushReplacementNamed(context, '/login');
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/login',
+                        (route) => false,
+                      );
                     }
                   }
                 },
