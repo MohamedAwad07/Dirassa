@@ -40,9 +40,14 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<UrlCubit, UrlState, String?>(
-      selector: (state) => state.profileUrl,
-      builder: (context, profileUrl) {
+    return BlocSelector<UrlCubit, UrlState, Map<String, String?>>(
+      selector: (state) => {
+        'profileUrl': state.profileUrl,
+        'userAgent': state.userAgent,
+      },
+      builder: (context, data) {
+        final profileUrl = data['profileUrl'];
+        final userAgent = data['userAgent'];
         if (profileUrl != null) {
           if (widget.fromSettings) {
             return Scaffold(
@@ -51,6 +56,7 @@ class _ProfileViewState extends State<ProfileView> {
                 fromHome: true,
                 url: profileUrl,
                 showBackButton: false,
+                userAgent: userAgent,
               ),
             );
           }
@@ -59,6 +65,7 @@ class _ProfileViewState extends State<ProfileView> {
               fromHome: true,
               url: profileUrl,
               showBackButton: false,
+              userAgent: userAgent,
             ),
           );
         } else {

@@ -8,6 +8,7 @@ class UrlState extends Equatable {
   final String? profileUrl;
   final String? registerUrl;
   final String? loginUrl;
+  final String? userAgent;
   final String? errorMessage;
 
   const UrlState({
@@ -16,6 +17,7 @@ class UrlState extends Equatable {
     this.profileUrl,
     this.registerUrl,
     this.loginUrl,
+    this.userAgent,
     this.errorMessage,
   });
 
@@ -26,6 +28,7 @@ class UrlState extends Equatable {
     profileUrl,
     registerUrl,
     loginUrl,
+    userAgent,
     errorMessage,
   ];
 
@@ -35,6 +38,7 @@ class UrlState extends Equatable {
     String? profileUrl,
     String? registerUrl,
     String? loginUrl,
+    String? userAgent,
     String? errorMessage,
   }) {
     return UrlState(
@@ -43,6 +47,7 @@ class UrlState extends Equatable {
       profileUrl: profileUrl ?? this.profileUrl,
       registerUrl: registerUrl ?? this.registerUrl,
       loginUrl: loginUrl ?? this.loginUrl,
+      userAgent: userAgent ?? this.userAgent,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }

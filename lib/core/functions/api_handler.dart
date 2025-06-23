@@ -64,6 +64,7 @@ Future<ApiResponse<ConfigResponse>> fetchConfig() async {
     final response = await dioHandler.dio.get(DioHandler.configUrl);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
+      log('configResponse URLs: ${response.data}');
       return ApiResponse.success(ConfigResponse.fromJson(response.data));
     } else {
       return ApiResponse.error(

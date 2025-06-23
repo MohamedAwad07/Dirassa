@@ -33,9 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<UrlCubit, UrlState, String?>(
-      selector: (state) => state.homeUrl,
-      builder: (context, homeUrl) {
+    return BlocSelector<UrlCubit, UrlState, Map<String, String?>>(
+      selector: (state) => {
+        'homeUrl': state.homeUrl,
+        'userAgent': state.userAgent,
+      },
+      builder: (context, data) {
+        final homeUrl = data['homeUrl'];
+        final userAgent = data['userAgent'];
         return BlocSelector<AuthCubit, AuthState, String?>(
           selector: (state) => state is AuthAuthenticated ? state.token : null,
           builder: (context, token) {
@@ -45,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   fromHome: true,
                   url: '$homeUrl?token=$token',
                   showBackButton: false,
+                  userAgent: userAgent,
                 ),
               );
             } else {

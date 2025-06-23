@@ -11,6 +11,7 @@ class WebViewScreen extends StatefulWidget {
   final String? title;
   final bool showBackButton;
   final bool fromHome;
+  final String? userAgent;
 
   const WebViewScreen({
     super.key,
@@ -18,6 +19,7 @@ class WebViewScreen extends StatefulWidget {
     this.title,
     this.showBackButton = true,
     this.fromHome = false,
+    this.userAgent,
   });
 
   @override
@@ -54,7 +56,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
               },
               onNavigationRequest: (NavigationRequest request) {
                 // Check if the URL contains "no_session_available"
-                if (request.url.contains('123f')) {
+                if (request.url.contains('no_session_available')) {
                   log(
                     '🔍 WebView: Session expired detected in URL: ${request.url}',
                   );
@@ -65,7 +67,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
               },
               onPageFinished: (String url) {
                 // Also check on page finish in case of redirects
-                if (url.contains('123f')) {
+                if (url.contains('no_session_available')) {
                   log(
                     '🔍 WebView: Session expired detected on page finish: $url',
                   );
@@ -76,7 +78,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
           )
           ..enableZoom(false)
           ..setUserAgent(
-            'Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36',
+            widget.userAgent ??
+                'Mozilla/5.0 (Linux; Android 10; Mobile) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.120 Mobile Safari/537.36',
           )
           ..loadRequest(Uri.parse(widget.url));
 
@@ -130,6 +133,8 @@ class _WebViewScreenState extends State<WebViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    log('userAgent: ${widget.userAgent}');
+    log('url: ${widget.url}');
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Stack(
@@ -209,63 +214,68 @@ class _WebViewScreenState extends State<WebViewScreen> {
           if (_isRedirecting)
             Container(
               color: Colors.black54,
-              child: Center(
-                child: Container(
-                  margin: const EdgeInsets.all(32),
-                  padding: const EdgeInsets.all(24),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withValues(alpha: 0.1),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.warning_amber_rounded,
-                          color: AppColors.primary,
-                          size: 48,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        AppStrings.sessionExpiredTitle,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      const Text(
-                        AppStrings.sessionExpiredMessage,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 14, color: Colors.grey),
-                      ),
-                      const SizedBox(height: 16),
-                      const SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            AppColors.primary,
+              child: SafeArea(
+                child: Center(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(16),
+                    child: Container(
+                      margin: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surface,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.1),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withValues(alpha: 0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.warning_amber_rounded,
+                              color: AppColors.primary,
+                              size: 48,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            AppStrings.sessionExpiredTitle,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primary,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          const Text(
+                            AppStrings.sessionExpiredMessage,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 14, color: Colors.grey),
+                          ),
+                          const SizedBox(height: 16),
+                          const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                AppColors.primary,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),

@@ -24,6 +24,7 @@ class UrlCubit extends Cubit<UrlState> {
             profileUrl: config.profileUrl,
             registerUrl: config.registerUrl,
             loginUrl: config.loginUrl,
+            userAgent: config.userAgent,
           ),
         );
       } else {

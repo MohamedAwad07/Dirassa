@@ -16,10 +16,10 @@ import 'core/utils/app_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = Observe();
-  await ScreenshotPrevention.initialize();
+  ScreenshotPrevention.initialize();
 
   // Set preferred orientations to allow both portrait and landscape
-  await SystemChrome.setPreferredOrientations([
+  SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
     DeviceOrientation.landscapeLeft,

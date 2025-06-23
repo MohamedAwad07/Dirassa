@@ -68,9 +68,14 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<UrlCubit, UrlState, String?>(
-      selector: (state) => state.registerUrl,
-      builder: (context, registerUrl) {
+    return BlocSelector<UrlCubit, UrlState, Map<String, String?>>(
+      selector: (state) => {
+        'registerUrl': state.registerUrl,
+        'userAgent': state.userAgent,
+      },
+      builder: (context, data) {
+        final registerUrl = data['registerUrl'];
+        final userAgent = data['userAgent'];
         return Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
@@ -141,6 +146,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       builder: (_) => WebViewScreen(
                                         url: registerUrl,
                                         title: AppStrings.registerTitle,
+                                        userAgent: userAgent,
                                       ),
                                     ),
                                   );

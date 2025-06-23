@@ -4,7 +4,7 @@ import 'package:dirassa/core/components/custom_text_button.dart';
 import 'package:dirassa/core/components/custom_text_field.dart';
 import 'package:dirassa/core/utils/app_assets.dart';
 import 'package:dirassa/core/utils/app_colors.dart';
-import 'package:dirassa/core/utils/device_utils.dart';
+import 'package:dirassa/core/utils/app_device_utils.dart';
 import 'package:dirassa/models/Login/login_request.dart';
 import 'package:dirassa/viewmodels/cubits/auth_cubit/auth_cubit.dart';
 import 'package:dirassa/viewmodels/cubits/url_cubit/url_cubit.dart';
@@ -43,8 +43,14 @@ class _LoginFormState extends State<LoginForm> {
         password: _passwordController.text,
         deviceId: await DeviceUtils.getDeviceId(),
       );
-      // ignore: use_build_context_synchronously
-      context.read<AuthCubit>().login(loginRequest);
+      if (loginUrl != null && loginUrl.isNotEmpty) {
+        // ignore: use_build_context_synchronously
+        context.read<AuthCubit>().login('$loginUrl/', loginRequest);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Center(child: Text(AppStrings.pageNotFound))),
+        );
+      }
     }
   }
 
@@ -61,6 +67,8 @@ class _LoginFormState extends State<LoginForm> {
               backgroundColor: Colors.red,
             ),
           );
+          // Reset the state after showing the error
+          context.read<AuthCubit>().reset();
         }
       },
       child: Padding(
