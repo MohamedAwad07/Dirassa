@@ -1,3 +1,11 @@
+/*
+
+Author : Software Engineer/ Mohamed Awad
+Date : 23/6/2025
+email: mawad8603@gmail.com
+portfolio: https://mohamed-awad-portfolio.web.app/
+
+*/
 import 'package:dirassa/bloc_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
